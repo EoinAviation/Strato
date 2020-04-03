@@ -15,8 +15,17 @@ namespace Strato.Persistence.Abstractions
     public interface ITransactionEnlistable
     {
         /// <summary>
+        ///     Gets the currently enlisted <see cref="ITransaction"/>.
+        /// </summary>
+        /// <returns>
+        ///     The currently enlisted <see cref="ITransaction"/>. If no <see cref="ITransaction"/>, then <c>null</c>
+        ///     will be returned.
+        /// </returns>
+        ITransaction GetCurrentTransaction();
+
+        /// <summary>
         ///     Sets the <see cref="ITransaction"/> to be used by persistence operations on the
-        ///     <see cref="IDatabase"/>.
+        ///     <see cref="IDbContext"/>.
         /// </summary>
         /// <param name="transaction">
         ///     The <see cref="ITransaction"/> to use.
@@ -28,7 +37,7 @@ namespace Strato.Persistence.Abstractions
 
         /// <summary>
         ///     Sets the <see cref="ITransaction"/> to be used by persistence operations on the
-        ///     <see cref="IDatabase"/> as an asynchronous operation.
+        ///     <see cref="IDbContext"/> as an asynchronous operation.
         /// </summary>
         /// <param name="transaction">
         ///     The <see cref="ITransaction"/> to use.

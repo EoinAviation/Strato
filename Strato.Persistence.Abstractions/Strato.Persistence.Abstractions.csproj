@@ -4,4 +4,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Strato.Analyzers" Version="1.0.14" />
+    </ItemGroup>
+
 </Project>

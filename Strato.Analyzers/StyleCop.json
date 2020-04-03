@@ -1,0 +1,48 @@
+{
+	"$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+	"settings": {
+		"indentation": {
+			"indentationSize": 4,
+			"tabSize": 4,
+			"useTabs": false
+		},
+		"orderingRules": {
+			"systemUsingDirectivesFirst": true,
+			"usingDirectivesPlacement": "insideNamespace",
+			"blankLinesBetweenUsingGroups": "require",
+			"elementOrder": [
+				"constant",
+				"static",
+				"readonly"
+			]
+		},
+		"namingRules": {
+			"allowCommonHungarianPrefixes": true,
+			"allowedHungarianPrefixes": [
+				"db"
+			],
+			"includeInferredTupleElementNames": true,
+			"tupleElementNameCasing" : "PascalCase"
+		},
+		"maintainabilityRules": {
+			"topLevelTypes": [
+				"class",
+				"interface",
+				"struct",
+				"enum"        
+			]
+		},
+		"layoutRules": {
+			"newlineAtEndOfFile": "require",
+			"allowConsecutiveUsings": true
+		},
+		"documentationRules": {
+		"companyName": "Strato Systems Pty. Ltd.",
+		"copyrightText": "  Copyright (c) {companyName} All rights reserved.",
+		"headerDecoration": "--------------------------------------------------------------------------------------------------------------------",
+		"xmlHeader": true,
+		"documentPrivateElements": true,
+		"documentPrivateFields": true
+		}
+	}
+}

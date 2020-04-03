@@ -1,8 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{7775A22A-6D39-4E98-A578-BF9609DEC1FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Persistence.Abstractions", "Strato.Persistence.Abstractions\Strato.Persistence.Abstractions.csproj", "{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93} = {7775A22A-6D39-4E98-A578-BF9609DEC1FD}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -10,9 +10,9 @@ namespace Strato.Persistence.Abstractions
     using System.Threading.Tasks;
 
     /// <summary>
-    ///     The interface representing a database.
+    ///     The interface representing a database context.
     /// </summary>
-    public interface IDatabase
+    public interface IDbContext
     {
         /// <summary>
         ///     Saves all changes made in this context to the database.

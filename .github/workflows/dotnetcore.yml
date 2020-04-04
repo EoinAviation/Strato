@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: [windows-latest]
+    runs-on: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
         cd ..
         
     - name: Deploy Analyzers
-      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate --api-key ${{secrets.GITHUB_TOKEN}} --source "https://nuget.pkg.github.com/eoinaviation/index.json"
+      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate
         
     - name: Restore dependencies
       run: |

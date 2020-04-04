@@ -17,9 +17,5 @@
       <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
       <AdditionalFiles Include="stylecop.json" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Compile Include="README.md" />
-    </ItemGroup>
     
 </Project>

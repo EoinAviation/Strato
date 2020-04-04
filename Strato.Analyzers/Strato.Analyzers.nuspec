@@ -11,7 +11,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="StyleCop.json" target="" />
+        <file src="stylecop.json" target="" />
         <file src="Strato.Analyzers.ruleset" target="" />
         <file src="Strato.Analyzers.props" target="build" />
     </files>

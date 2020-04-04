@@ -5,6 +5,11 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Strato Systems Pty. Ltd.</Authors>
         <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

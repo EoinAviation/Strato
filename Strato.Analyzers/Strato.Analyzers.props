@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<NuGetPackageName>Strato.Analyzers</NuGetPackageName>
-		<NuGetPackageVersion>1.0.14</NuGetPackageVersion>
+		<NuGetPackageVersion>1.0.15</NuGetPackageVersion>
 		<CodeAnalysisRuleSetLocation Condition=" '$(NuGetPackageRoot)' != '' ">$(NuGetPackageRoot)\$(NuGetPackageName)\$(NuGetPackageVersion)</CodeAnalysisRuleSetLocation>
 		<CodeAnalysisRuleSetLocation Condition=" '$(CodeAnalysisRuleSetLocation)' == '' and '$(SolutionDir)' != '' ">$(SolutionDir)\packages\$(NuGetPackageName).$(NuGetPackageVersion)</CodeAnalysisRuleSetLocation>
 		<CodeAnalysisRuleSetLocation Condition=" '$(CodeAnalysisRuleSetLocation)' == '' ">$([System.IO.Path]::GetDirectoryName($(MSBuildProjectDirectory)))\packages\$(NuGetPackageName).$(NuGetPackageVersion)</CodeAnalysisRuleSetLocation>

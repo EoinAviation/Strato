@@ -31,7 +31,7 @@ jobs:
         
     - name: Restore dependencies
       run: |
-        dotnet restore --source "eoinaviation"
+        dotnet restore --source "https://nuget.pkg.github.com/eoinaviation/index.json"
         dotnet restore --source "https://api.nuget.org/v3/index.json"
       
     - name: Build

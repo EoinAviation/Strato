@@ -20,6 +20,14 @@ jobs:
         source-url: https://nuget.pkg.github.com/eoinaviation/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} 
+    
+    - name: Pack Analyzers
+      run: |
+        cd Strato.Analyzers
+        dotnet pack --configuration Release /p:NuspecFile=Strato.Analyzers.nuspec
+        
+    - name: Deploy Analyzers
+      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg
         
     - name: Install dependencies
       run: dotnet restore

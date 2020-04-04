@@ -4,7 +4,7 @@
         <id>Strato.Analyzers</id>
         <authors>Eoin Motherway</authors>
         <description>StyleCop Analyzers for Strato Systems Pty. Ltd. source code.</description>
-        <version>1.0.15</version>
+        <version>1.0.16</version>
         <repository type="git" url="https://github.com/EoinAviation/Strato" />
         <dependencies>
             <dependency id="StyleCop.Analyzers" version="1.1.118" />

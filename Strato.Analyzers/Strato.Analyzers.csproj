@@ -8,7 +8,7 @@
         <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
         <PackageVersion>1.0.15</PackageVersion>
         <RepositoryType>git</RepositoryType>
-        <Version>1.0.15</Version>
+        <Version>1.0.16</Version>
     </PropertyGroup>
 
     <ItemGroup>

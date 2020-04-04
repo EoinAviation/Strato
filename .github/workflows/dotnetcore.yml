@@ -27,7 +27,7 @@ jobs:
         dotnet pack --configuration Release /p:NuspecFile=Strato.Analyzers.nuspec
         
     - name: Deploy Analyzers
-      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg
+      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate
         
     - name: Install dependencies
       run: dotnet restore

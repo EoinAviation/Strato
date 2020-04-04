@@ -21,10 +21,10 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} 
     
-    - name: Pack Analyzers
+    - name: Build Analyzers
       run: |
         cd Strato.Analyzers
-        dotnet pack --configuration Release /p:NuspecFile=Strato.Analyzers.nuspec
+        dotnet build
         
     - name: Deploy Analyzers
       run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate

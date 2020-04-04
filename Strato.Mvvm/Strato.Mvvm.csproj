@@ -2,6 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Strato Systems Pty. Ltd.</Authors>
+        <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

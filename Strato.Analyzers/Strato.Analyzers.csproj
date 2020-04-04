@@ -4,8 +4,9 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Version>1.0.14</Version>
-        <Authors>Eoin Motherway</Authors>
+        <Authors>Strato Systems Pty. Ltd.</Authors>
         <Company>Strato Systems Pty. Ltd.</Company>
+        <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

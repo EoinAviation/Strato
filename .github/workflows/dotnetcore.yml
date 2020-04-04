@@ -28,7 +28,7 @@ jobs:
         cd ..
         
     - name: Deploy Analyzers
-      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate
+      run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate --api-key ${{secrets.GITHUB_TOKEN}} 
         
     - name: Restore dependencies
       run: |

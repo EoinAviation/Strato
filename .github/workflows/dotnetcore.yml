@@ -17,10 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-        
-    - name: Add Git Hub Package Registry
-      run: |
-        dotnet nuget sources add -Name "GitHub" -Source "https://nuget.pkg.github.com/eoinaviation/index.json" -UserName "EoinAviation" -Password ${{secrets.GITHUB_TOKEN}}
+        source-url: https://nuget.pkg.github.com/eoinaviation/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} 
         
     - name: Install dependencies
       run: dotnet restore
@@ -34,4 +33,4 @@ jobs:
     - name: Release
       run: |
         dotnet pack -c Release -o out
-        dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true -Source "GitHub"
+        dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true        

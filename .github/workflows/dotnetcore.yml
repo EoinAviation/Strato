@@ -25,7 +25,6 @@ jobs:
       run: |
         cd Strato.Analyzers
         dotnet pack --configuration Release /p:NuspecFile=Strato.Analyzers.nuspec
-        cd ..
         
     - name: Deploy Analyzers
       run: dotnet nuget push ./Strato.Analyzers/bin/Release/*.nupkg --skip-duplicate
@@ -42,5 +41,5 @@ jobs:
       
     - name: Release
       run: |
-        dotnet pack -c Release -o out
-        dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true        
+        dotnet pack --configuration Release
+        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true

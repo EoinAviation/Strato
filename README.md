@@ -14,3 +14,4 @@ The `Strato.Mvvm` library contains classes and interfaces for use in an MVVM (Mo
 
 ### Strato.Analyzers
 The `Strato.Analyzers` library contains a custom StyleCop analyzer configuration for providing style consistency throughout all Strato Systems Pty. Ltd. source code.
+To correctly pack this into a NuGet package, run `dotnet pack -c Release /p:NuspecFile=Strato.Analyzers.nuspec`

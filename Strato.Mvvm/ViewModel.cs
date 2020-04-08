@@ -53,6 +53,41 @@ namespace Strato.Mvvm
         }
 
         /// <summary>
+        ///     Gets the value of the property or uses the given default value.
+        /// </summary>
+        /// <param name="defaultValue">
+        ///     The default value to use if the property has not been registered yet.
+        /// </param>
+        /// <param name="propertyName">
+        ///     The name of the property.
+        /// </param>
+        /// <typeparam name="TValue">
+        ///     The type of value expected.
+        /// </typeparam>
+        /// <returns>
+        ///     The value of the property.
+        /// </returns>
+        protected TValue Get<TValue>(TValue defaultValue, [CallerMemberName] string propertyName = null)
+        {
+            // Ensure we have a property name
+            EnsurePropertyNameIsValid(propertyName);
+
+            // If we have a value, return it
+            if (_properties.ContainsKey(propertyName))
+            {
+                return (TValue)_properties[propertyName];
+            }
+            else
+            {
+                // Otherwise, set it to our default
+                Set(defaultValue, propertyName);
+            }
+
+            // Return the value
+            return Get<TValue>(propertyName);
+        }
+
+        /// <summary>
         ///     Sets the value of the property.
         /// </summary>
         /// <param name="value">

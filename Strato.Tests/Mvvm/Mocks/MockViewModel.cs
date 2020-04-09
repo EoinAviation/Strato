@@ -54,9 +54,9 @@ namespace Strato.Tests.Mvvm.Mocks
         }
 
         /// <summary>
-        ///     Gets the <see cref="ICommand"/> for incrementing the <see cref="Integer"/> property.
+        ///     Gets the <see cref="RelayCommand"/> for incrementing the <see cref="Integer"/> property.
         /// </summary>
-        public IExtendedCommand IncrementIntegerCommand => Get(new RelayCommand(IncrementInteger));
+        public RelayCommand IncrementIntegerCommand => Get(new RelayCommand(IncrementInteger));
 
         /// <summary>
         ///     Increments the <see cref="Integer"/> property.

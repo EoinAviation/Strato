@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IExtendedCommand.cs" company="Strato Systems Pty. Ltd.">
+//   Copyright (c) Strato Systems Pty. Ltd. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Strato.Mvvm.Commands
 {
     using System.Windows.Input;
@@ -7,7 +13,7 @@ namespace Strato.Mvvm.Commands
     /// <summary>
     ///     The extended version of the <see cref="ICommand"/>.
     /// </summary>
-    public interface IExtendedCommand : ICommand
+    internal interface IExtendedCommand : ICommand
     {
         /// <summary>
         ///     Determines whether the current <see cref="IExtendedCommand"/> can be executed in its current state.

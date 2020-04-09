@@ -1,7 +1,12 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RelayCommand.cs" company="Strato Systems Pty. Ltd.">
+//   Copyright (c) Strato Systems Pty. Ltd. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Strato.Mvvm.Commands
 {
     using System;
-    using System.Windows.Input;
 
     /// <summary>
     ///     A command whose sole purpose is to relay its functionality to other objects by invoking delegates.
@@ -94,15 +99,6 @@ namespace Strato.Mvvm.Commands
         /// <summary>
         ///     Executes the current <see cref="RelayCommand"/>.
         /// </summary>
-        public void Execute()
-        {
-            if (CanExecute()) Execute(null);
-        }
-
-        /// <summary>
-        ///     Method used to raise the <see cref="CanExecuteChanged"/> event to indicate that the return value of the
-        ///     <see cref="CanExecute"/> method has changed.
-        /// </summary>
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public void Execute() => Execute(null);
     }
 }

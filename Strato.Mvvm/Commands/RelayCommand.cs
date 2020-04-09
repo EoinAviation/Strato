@@ -25,7 +25,7 @@ namespace Strato.Mvvm.Commands
         private readonly Func<object, bool> _canExecute;
 
         /// <summary>
-        ///     The event raised when the return value of the <see cref="CanExecute"/> method has changed.
+        ///     The event raised when the return value of the <see cref="CanExecute()"/> method has changed.
         /// </summary>
         public event EventHandler CanExecuteChanged;
 

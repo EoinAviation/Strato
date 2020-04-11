@@ -27,5 +27,10 @@ namespace Strato.Mvvm.Commands
         ///     Executes the current <see cref="IExtendedCommand"/>.
         /// </summary>
         void Execute();
+
+        /// <summary>
+        ///     Raises the <see cref="ICommand.CanExecuteChanged"/> event.
+        /// </summary>
+        void RaiseCanExecuteChanged();
     }
 }

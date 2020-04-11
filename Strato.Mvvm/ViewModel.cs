@@ -11,6 +11,8 @@ namespace Strato.Mvvm
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
+    using Strato.Mvvm.Commands;
+
     /// <summary>
     ///     The base View Model implementing <see cref="INotifyPropertyChanging"/> and
     ///     <see cref="INotifyPropertyChanged"/>.
@@ -160,6 +162,12 @@ namespace Strato.Mvvm
 
             // Invoke the event
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            // Raise the CanExecuteChanged method on any RelayCommands
+            foreach (KeyValuePair<string, object> property in _properties)
+            {
+                if (property.Value is IExtendedCommand command) command.RaiseCanExecuteChanged();
+            }
         }
 
         /// <summary>

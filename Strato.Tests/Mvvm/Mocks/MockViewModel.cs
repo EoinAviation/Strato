@@ -7,8 +7,10 @@
 namespace Strato.Tests.Mvvm.Mocks
 {
     using System;
+    using System.Windows.Input;
 
     using Strato.Mvvm;
+    using Strato.Mvvm.Commands;
 
     /// <summary>
     ///     The mocked <see cref="ViewModel"/>.
@@ -50,5 +52,15 @@ namespace Strato.Tests.Mvvm.Mocks
             get => Get<string>(null);
             set => Set(value, string.Empty);
         }
+
+        /// <summary>
+        ///     Gets the <see cref="RelayCommand"/> for incrementing the <see cref="Integer"/> property.
+        /// </summary>
+        public RelayCommand IncrementIntegerCommand => Get(new RelayCommand(IncrementInteger));
+
+        /// <summary>
+        ///     Increments the <see cref="Integer"/> property.
+        /// </summary>
+        public void IncrementInteger() => Integer++;
     }
 }

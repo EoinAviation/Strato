@@ -74,6 +74,24 @@ namespace Strato.Tests.Mvvm
         }
 
         /// <summary>
+        ///     Ensures that the Get method sets the default value if one is not already present, and does not duplicate
+        ///     new objects.
+        /// </summary>
+        [Test]
+        public void DefaultGettersWork()
+        {
+            // Arrange
+            MockViewModel viewModel = new MockViewModel();
+
+            // Act / Assert
+            for (int i = 1; i <= 10; i++)
+            {
+                viewModel.IncrementIntegerCommand.Execute();
+                Assert.AreEqual(i, viewModel.Integer);
+            }
+        }
+
+        /// <summary>
         ///     Ensures the <see cref="INotifyPropertyChanging.PropertyChanging"/> and
         ///     <see cref="INotifyPropertyChanged.PropertyChanged"/> events are raised correctly.
         /// </summary>

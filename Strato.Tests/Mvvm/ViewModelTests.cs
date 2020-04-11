@@ -12,6 +12,7 @@ namespace Strato.Tests.Mvvm
     using NUnit.Framework;
 
     using Strato.Mvvm;
+    using Strato.Mvvm.Commands;
     using Strato.Tests.Mvvm.Mocks;
 
     /// <summary>
@@ -105,10 +106,29 @@ namespace Strato.Tests.Mvvm
             MockViewModel viewModel = new MockViewModel { Integer = startingValue };
 
             // Some variables to track whether or not the events were raised
+            bool canExecuteChangedWasCalled = false;
             bool propertyChangingWasCalled = false;
             string propertyChangingName = string.Empty;
             bool propertyChangedWasCalled = false;
             string propertyChangedName = string.Empty;
+
+            // Local function to handle the CanExecuteChanged event
+            void OnCanExecuteChanged(object sender, EventArgs args)
+            {
+                if (sender is RelayCommand testCommand)
+                {
+                    // Ensure the value has been set
+                    Assert.AreEqual(viewModel.IncrementIntegerCommand, testCommand);
+
+                    // Set these for later
+                    canExecuteChangedWasCalled = true;
+                }
+                else
+                {
+                    // Not the RelayCommand, fail!
+                    Assert.Fail();
+                }
+            }
 
             // Local function to handle the PropertyChanging event
             void OnPropertyChanging(object sender, PropertyChangingEventArgs args)
@@ -149,6 +169,7 @@ namespace Strato.Tests.Mvvm
             }
 
             // Setup the events
+            viewModel.IncrementIntegerCommand.CanExecuteChanged += OnCanExecuteChanged;
             viewModel.PropertyChanging += OnPropertyChanging;
             viewModel.PropertyChanged += OnPropertyChanged;
 
@@ -160,11 +181,13 @@ namespace Strato.Tests.Mvvm
             finally
             {
                 // Clean up, just in case
+                viewModel.IncrementIntegerCommand.CanExecuteChanged -= OnCanExecuteChanged;
                 viewModel.PropertyChanging -= OnPropertyChanging;
                 viewModel.PropertyChanged -= OnPropertyChanged;
             }
 
             // Assert
+            Assert.IsTrue(canExecuteChangedWasCalled);
             Assert.IsTrue(propertyChangingWasCalled);
             Assert.IsTrue(propertyChangedWasCalled);
             Assert.AreEqual(nameof(viewModel.Integer), propertyChangingName);

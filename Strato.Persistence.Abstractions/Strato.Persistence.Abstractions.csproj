@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Strato.Analyzers" Version="1.0.16" />
+      <PackageReference Include="Strato.Analyzers" Version="1.0.18" />
     </ItemGroup>
 
 </Project>

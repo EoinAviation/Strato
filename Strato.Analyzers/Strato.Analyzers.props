@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<NuGetPackageName>Strato.Analyzers</NuGetPackageName>
-		<NuGetPackageVersion>1.0.16</NuGetPackageVersion>
+		<NuGetPackageVersion>1.0.17</NuGetPackageVersion>
 	</PropertyGroup>
 	<PropertyGroup>
 		<CodeAnalysisRuleSet>Strato.Analyzers.ruleset</CodeAnalysisRuleSet>

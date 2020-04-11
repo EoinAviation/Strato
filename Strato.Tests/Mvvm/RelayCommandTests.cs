@@ -24,7 +24,7 @@ namespace Strato.Tests.Mvvm
         {
             // Arrange
             bool didExecute = false;
-            RelayCommand command = new RelayCommand(o => didExecute = true);
+            RelayCommand command = new RelayCommand(() => didExecute = true);
 
             // Act
             command.Execute(null);
@@ -42,31 +42,13 @@ namespace Strato.Tests.Mvvm
         {
             // Arrange
             bool didExecute = false;
-            RelayCommand command = new RelayCommand(o => didExecute = true, o => false);
+            RelayCommand command = new RelayCommand(() => didExecute = true, () => false);
 
             // Act
             command.Execute(null);
 
             // Assert
             Assert.IsFalse(didExecute);
-        }
-
-        /// <summary>
-        ///     Ensures that the <see cref="RelayCommand"/> works as expected when constructing with the  parameterless
-        ///     constructors.
-        /// </summary>
-        [Test]
-        public void ParameterlessCommandsWork()
-        {
-            // Arrange
-            bool didExecute = false;
-            RelayCommand command = new RelayCommand(() => didExecute = true);
-
-            // Act
-            command.Execute();
-
-            // Assert
-            Assert.IsTrue(didExecute);
         }
     }
 }

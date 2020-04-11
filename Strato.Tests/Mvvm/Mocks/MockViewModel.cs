@@ -7,6 +7,7 @@
 namespace Strato.Tests.Mvvm.Mocks
 {
     using System;
+    using System.Threading.Tasks;
     using System.Windows.Input;
 
     using Strato.Mvvm;
@@ -59,8 +60,25 @@ namespace Strato.Tests.Mvvm.Mocks
         public RelayCommand IncrementIntegerCommand => Get(new RelayCommand(IncrementInteger));
 
         /// <summary>
+        ///     Gets the <see cref="RelayCommand"/> for incrementing the <see cref="Integer"/> property.
+        /// </summary>
+        public AsyncCommand IncrementIntegerAsyncCommand => Get(new AsyncCommand(IncrementIntegerAsync));
+
+        /// <summary>
         ///     Increments the <see cref="Integer"/> property.
         /// </summary>
         public void IncrementInteger() => Integer++;
+
+        /// <summary>
+        ///     Increments the <see cref="Integer"/> property as an asynchronous operation.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public async Task IncrementIntegerAsync()
+        {
+            await Task.Yield();
+            IncrementInteger();
+        }
     }
 }

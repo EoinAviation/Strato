@@ -2,12 +2,15 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<NuGetPackageName>Strato.Analyzers</NuGetPackageName>
-		<NuGetPackageVersion>1.0.17</NuGetPackageVersion>
+		<NuGetPackageVersion>1.0.18</NuGetPackageVersion>
+		<CodeAnalysisRuleSetLocation Condition=" '$(NuGetPackageRoot)' != '' ">$(NuGetPackageRoot)\$(NuGetPackageName)\$(NuGetPackageVersion)</CodeAnalysisRuleSetLocation>
+		<CodeAnalysisRuleSetLocation Condition=" '$(CodeAnalysisRuleSetLocation)' == '' and '$(SolutionDir)' != '' ">$(SolutionDir)\packages\$(NuGetPackageName).$(NuGetPackageVersion)</CodeAnalysisRuleSetLocation>
+		<CodeAnalysisRuleSetLocation Condition=" '$(CodeAnalysisRuleSetLocation)' == '' ">$([System.IO.Path]::GetDirectoryName($(MSBuildProjectDirectory)))\packages\$(NuGetPackageName).$(NuGetPackageVersion)</CodeAnalysisRuleSetLocation>
 	</PropertyGroup>
 	<PropertyGroup>
-		<CodeAnalysisRuleSet>Strato.Analyzers.ruleset</CodeAnalysisRuleSet>
+		<CodeAnalysisRuleSet>$(CodeAnalysisRuleSetLocation)\Strato.Analyzers.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 	<ItemGroup>
-		<AdditionalFiles Include="stylecop.json" Link="stylecop.json" />
+		<AdditionalFiles Include="$(CodeAnalysisRuleSetLocation)\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
 </Project>

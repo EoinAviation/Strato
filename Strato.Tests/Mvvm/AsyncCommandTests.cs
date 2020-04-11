@@ -1,33 +1,43 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RelayCommandTests.cs" company="Strato Systems Pty. Ltd.">
+// <copyright file="AsyncCommandTests.cs" company="Strato Systems Pty. Ltd.">
 //   Copyright (c) Strato Systems Pty. Ltd. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Strato.Tests.Mvvm
 {
+    using System.Threading.Tasks;
+
     using NUnit.Framework;
 
     using Strato.Mvvm.Commands;
 
     /// <summary>
-    ///     The <see cref="RelayCommand"/> tests.
+    ///     The <see cref="AsyncCommand"/> tests.
     /// </summary>
     [TestFixture]
-    public class RelayCommandTests
+    public class AsyncCommandTests
     {
         /// <summary>
-        ///     Ensures that <see cref="RelayCommand"/>s can be executed.
+        ///     Ensures that <see cref="AsyncCommand"/>s can be executed.
         /// </summary>
+        /// <returns>
+        ///     The <see cref="Task"/>.
+        /// </returns>
         [Test]
-        public void RelayCommandExecutes()
+        public async Task RelayCommandExecutes()
         {
             // Arrange
             bool didExecute = false;
-            RelayCommand command = new RelayCommand(() => didExecute = true);
+            AsyncCommand command = new AsyncCommand(
+                async () =>
+                {
+                    await Task.Yield();
+                    didExecute = true;
+                });
 
             // Act
-            command.Execute();
+            await command.ExecuteAsync();
 
             // Assert
             Assert.IsTrue(didExecute);
@@ -37,15 +47,24 @@ namespace Strato.Tests.Mvvm
         ///     Ensures that <see cref="RelayCommand"/>s are not executed if the <see cref="RelayCommand.CanExecute()"/>
         ///     method returns <c>false</c>.
         /// </summary>
+        /// <returns>
+        ///     The <see cref="Task"/>.
+        /// </returns>
         [Test]
-        public void RelayCommandDoesNotExecuteWhenUnable()
+        public async Task RelayCommandDoesNotExecuteWhenUnable()
         {
             // Arrange
             bool didExecute = false;
-            RelayCommand command = new RelayCommand(() => didExecute = true, () => false);
+            AsyncCommand command = new AsyncCommand(
+                async () =>
+                {
+                    await Task.Yield();
+                    didExecute = true;
+                },
+                () => false);
 
             // Act
-            command.Execute();
+            await command.ExecuteAsync();
 
             // Assert
             Assert.IsFalse(didExecute);

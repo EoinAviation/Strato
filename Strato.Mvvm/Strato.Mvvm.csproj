@@ -11,6 +11,7 @@
 
     <PropertyGroup>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <Version>1.0.2</Version>
     </PropertyGroup>
 
     <ItemGroup>

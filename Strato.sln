@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Persistence.Abstract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Persistence.EntityFrameworkCore", "Strato.Persistence.EntityFrameworkCore\Strato.Persistence.EntityFrameworkCore.csproj", "{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Analyzers", "Strato.Analyzers\Strato.Analyzers.csproj", "{6860DA98-67AD-4234-992D-CD04D94F93D4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Mvvm", "Strato.Mvvm\Strato.Mvvm.csproj", "{1FBE4B4B-256C-42D8-B460-9793AA010BDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Tests", "Strato.Tests\Strato.Tests.csproj", "{7EB5A1C3-D6D8-4F4C-9191-BBEFDDBAADD5}"
@@ -30,10 +28,6 @@ Global
 		{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6860DA98-67AD-4234-992D-CD04D94F93D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6860DA98-67AD-4234-992D-CD04D94F93D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6860DA98-67AD-4234-992D-CD04D94F93D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6860DA98-67AD-4234-992D-CD04D94F93D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1FBE4B4B-256C-42D8-B460-9793AA010BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1FBE4B4B-256C-42D8-B460-9793AA010BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FBE4B4B-256C-42D8-B460-9793AA010BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -13,5 +13,10 @@ The `Strato.Persistence.EntityFrameworkCore` library contains implementations of
 The `Strato.Mvvm` library contains classes and interfaces for use in an MVVM (Model-View-ViewModel) project, such as a WPF or Xamarin application.
 
 ### Strato.Analyzers
-The `Strato.Analyzers` library contains a custom StyleCop analyzer configuration for providing style consistency throughout all Strato Systems Pty. Ltd. source code.
-To correctly pack this into a NuGet package, run `dotnet pack -c Release /p:NuspecFile=Strato.Analyzers.nuspec`
+The `Strato.Analyzers` library contains a StyleCop analyzer configurations for providing style consistency throughout all Strato Systems Pty. Ltd. source code.
+For simplicity with deployment, this library has been moved into a [separate repository](https://github.com/EoinAviation/Strato.Analyzers).
+
+## Usage
+A NuGet package is available through the GitHub Package Repository [here](https://github.com/EoinAviation/Strato/packages/).
+To make this source available in your IDE, add `https://nuget.pkg.github.com/eoinaviation/index.json` to your NuGet package feeds (Tutorials for [Visual Studio](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources), [Rider](https://www.jetbrains.com/help/rider/Using_NuGet.html#sources))
+Your IDE may prompt you for a username and password, use your GitHub username for the username, and you'll need a personal access token with read access to the GitHub Package registry for the password. More info [here](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-dotnet-cli-for-use-with-github-packages)

@@ -34,4 +34,4 @@ jobs:
     - name: Release
       run: |
         dotnet pack --configuration Release
-        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true
+        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --source "https://nuget.pkg.github.com/eoinaviation/index.json" --api-key ${{secrets.GITHUB_TOKEN}}

@@ -7,10 +7,10 @@
 namespace Strato.Tests.Mvvm
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
 
     using NUnit.Framework;
-
     using Strato.Mvvm;
     using Strato.Mvvm.Commands;
     using Strato.Tests.Mvvm.Mocks;
@@ -106,11 +106,9 @@ namespace Strato.Tests.Mvvm
             MockViewModel viewModel = new MockViewModel { Integer = startingValue };
 
             // Some variables to track whether or not the events were raised
+            List<string> propertiesChanging = new List<string>();
+            List<string> propertiesChanged = new List<string>();
             bool canExecuteChangedWasCalled = false;
-            bool propertyChangingWasCalled = false;
-            string propertyChangingName = string.Empty;
-            bool propertyChangedWasCalled = false;
-            string propertyChangedName = string.Empty;
 
             // Local function to handle the CanExecuteChanged event
             void OnCanExecuteChanged(object sender, EventArgs args)
@@ -138,9 +136,8 @@ namespace Strato.Tests.Mvvm
                     // Ensure the value hasn't been set yet
                     Assert.AreEqual(startingValue, testViewModel.Integer);
 
-                    // Set these for later
-                    propertyChangingWasCalled = true;
-                    propertyChangingName = args.PropertyName;
+                    // Update the list
+                    propertiesChanging.Add(args.PropertyName);
                 }
                 else
                 {
@@ -157,9 +154,8 @@ namespace Strato.Tests.Mvvm
                     // Ensure the value has been set
                     Assert.AreEqual(finishingValue, testViewModel.Integer);
 
-                    // Set these for later
-                    propertyChangedWasCalled = true;
-                    propertyChangedName = args.PropertyName;
+                    // Update the list
+                    propertiesChanged.Add(args.PropertyName);
                 }
                 else
                 {
@@ -188,10 +184,10 @@ namespace Strato.Tests.Mvvm
 
             // Assert
             Assert.IsTrue(canExecuteChangedWasCalled);
-            Assert.IsTrue(propertyChangingWasCalled);
-            Assert.IsTrue(propertyChangedWasCalled);
-            Assert.AreEqual(nameof(viewModel.Integer), propertyChangingName);
-            Assert.AreEqual(nameof(viewModel.Integer), propertyChangedName);
+            Assert.Contains(nameof(viewModel.Integer), propertiesChanging);
+            Assert.Contains(nameof(viewModel.Integer), propertiesChanged);
+            Assert.Contains(nameof(viewModel.ImplicitlyDependentInteger), propertiesChanged);
+            Assert.Contains(nameof(viewModel.ExplicitlyDependentInteger), propertiesChanged);
         }
     }
 }

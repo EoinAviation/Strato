@@ -9,8 +9,11 @@ namespace Strato.Mvvm
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
     using System.Runtime.CompilerServices;
 
+    using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
 
     /// <summary>
@@ -20,15 +23,64 @@ namespace Strato.Mvvm
     public abstract class ViewModel : INotifyPropertyChanging, INotifyPropertyChanged
     {
         /// <summary>
+        ///     The <see cref="IReadOnlyCollection{T}"/> of property names who only have a getter methods.
+        /// </summary>
+        private readonly IReadOnlyCollection<string> _getOnlyProperties;
+
+        /// <summary>
+        ///     The <see cref="IReadOnlyCollection{T}"/> of property names who have been explicitly declared as a
+        ///     dependent property with the <see cref="DependentAttribute"/>.
+        /// </summary>
+        private readonly IReadOnlyCollection<string> _explicitlyDependentProperties;
+
+        /// <summary>
         ///     The <see cref="Dictionary{TKey,TValue}"/> of properties and values, where the Key is the property name
         ///     and the value is the properties value.
         /// </summary>
-        private readonly Dictionary<string, object> _properties;
+        private readonly Dictionary<string, object> _propertyValues;
+
+        /// <summary>
+        ///     Event raised when the value of a property is about to change.
+        /// </summary>
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        /// <summary>
+        ///     Event raised when the value of a property has changed.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ViewModel"/> class.
         /// </summary>
-        protected ViewModel() => _properties = new Dictionary<string, object>();
+        protected ViewModel()
+        {
+            _propertyValues = new Dictionary<string, object>();
+            _getOnlyProperties = FindGetOnlyProperties().ToList().AsReadOnly();
+            _explicitlyDependentProperties = FindDependentProperties().ToList().AsReadOnly();
+        }
+
+        /// <summary>
+        ///     Gets an <see cref="ICollection{T}"/> of property names who do not have setter methods.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="ICollection{T}"/> of property names.
+        /// </returns>
+        private ICollection<string> FindGetOnlyProperties() =>
+            GetType().GetProperties()
+                     .Where(p => p.SetMethod == null)
+                     .Select(p => p.Name).ToList();
+
+        /// <summary>
+        ///     Gets an <see cref="ICollection{T}"/> of property names who have a <see cref="DependentAttribute"/>.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="ICollection{T}"/> of property names.
+        /// </returns>
+        private ICollection<string> FindDependentProperties() =>
+            GetType().GetProperties()
+                     .Where(p => p.GetCustomAttribute<DependentAttribute>() != null)
+                     .Select(p => p.Name)
+                     .ToList();
 
         /// <summary>
         ///     Gets the value of the property.
@@ -48,7 +100,7 @@ namespace Strato.Mvvm
             EnsurePropertyNameIsValid(propertyName);
 
             // If we have a value, return it
-            if (_properties.ContainsKey(propertyName)) return (TValue)_properties[propertyName];
+            if (_propertyValues.ContainsKey(propertyName)) return (TValue)_propertyValues[propertyName];
 
             // Otherwise use the default value
             return default;
@@ -75,9 +127,9 @@ namespace Strato.Mvvm
             EnsurePropertyNameIsValid(propertyName);
 
             // If we have a value, return it
-            if (_properties.ContainsKey(propertyName))
+            if (_propertyValues.ContainsKey(propertyName))
             {
-                return (TValue)_properties[propertyName];
+                return (TValue)_propertyValues[propertyName];
             }
             else
             {
@@ -110,29 +162,27 @@ namespace Strato.Mvvm
             OnPropertyChanging(propertyName);
 
             // Todo: Roslyn is showing a style issue here. Need to omit it from the Analyzers project.
-            if (_properties.ContainsKey(propertyName))
+            if (_propertyValues.ContainsKey(propertyName))
             {
-                _properties[propertyName] = value;
+                _propertyValues[propertyName] = value;
             }
             else
             {
                 // Otherwise, add a new entry
-                _properties.Add(propertyName, value);
+                _propertyValues.Add(propertyName, value);
             }
 
             // Notify
             OnPropertyChanged(propertyName);
+
+            // Also notify any dependent properties
+            List<string> dependentProperties = _getOnlyProperties.ToList();
+            dependentProperties.AddRange(_explicitlyDependentProperties);
+            foreach (string dependentPropertyName in dependentProperties)
+            {
+                OnPropertyChanged(dependentPropertyName);
+            }
         }
-
-        /// <summary>
-        ///     Event raised when the value of a property is about to change.
-        /// </summary>
-        public event PropertyChangingEventHandler PropertyChanging;
-
-        /// <summary>
-        ///     Event raised when the value of a property has changed.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         ///        Method called to raise the <see cref="PropertyChanging"/> event.
@@ -164,7 +214,7 @@ namespace Strato.Mvvm
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
             // Raise the CanExecuteChanged method on any RelayCommands
-            foreach (KeyValuePair<string, object> property in _properties)
+            foreach (KeyValuePair<string, object> property in _propertyValues)
             {
                 if (property.Value is IExtendedCommand command) command.RaiseCanExecuteChanged();
             }

@@ -8,9 +8,9 @@ namespace Strato.Tests.Mvvm.Mocks
 {
     using System;
     using System.Threading.Tasks;
-    using System.Windows.Input;
 
     using Strato.Mvvm;
+    using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
 
     /// <summary>
@@ -52,6 +52,26 @@ namespace Strato.Tests.Mvvm.Mocks
         {
             get => Get<string>(null);
             set => Set(value, string.Empty);
+        }
+
+        /// <summary>
+        ///     Gets the <see cref="int"/> which is implicitly dependent on <see cref="Integer"/>.
+        /// </summary>
+        public int ImplicitlyDependentInteger => Integer * 2;
+
+        /// <summary>
+        ///     Gets or sets the <see cref="int"/> which is explicitly dependent on <see cref="Integer"/>.
+        /// </summary>
+        [Dependent]
+        public int ExplicitlyDependentInteger
+        {
+            get => Integer * 5;
+
+            // ReSharper disable once ValueParameterNotUsed
+            set
+            {
+                // Do nothing
+            }
         }
 
         /// <summary>

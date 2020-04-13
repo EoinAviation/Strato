@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Strato.Mvvm
+namespace Strato.Mvvm.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -13,6 +13,7 @@ namespace Strato.Mvvm
     using System.Reflection;
     using System.Runtime.CompilerServices;
 
+    using Strato.Extensions;
     using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
 
@@ -100,6 +101,8 @@ namespace Strato.Mvvm
             EnsurePropertyNameIsValid(propertyName);
 
             // If we have a value, return it
+            // ReSharper disable once AssignNullToNotNullAttribute
+            //  ^ Already checking in EnsurePropertyNameIsValid
             if (_propertyValues.ContainsKey(propertyName)) return (TValue)_propertyValues[propertyName];
 
             // Otherwise use the default value
@@ -127,6 +130,8 @@ namespace Strato.Mvvm
             EnsurePropertyNameIsValid(propertyName);
 
             // If we have a value, return it
+            // ReSharper disable once AssignNullToNotNullAttribute
+            //  ^ Already checking in EnsurePropertyNameIsValid
             if (_propertyValues.ContainsKey(propertyName))
             {
                 return (TValue)_propertyValues[propertyName];
@@ -161,16 +166,8 @@ namespace Strato.Mvvm
             // If the value is there, update it
             OnPropertyChanging(propertyName);
 
-            // Todo: Roslyn is showing a style issue here. Need to omit it from the Analyzers project.
-            if (_propertyValues.ContainsKey(propertyName))
-            {
-                _propertyValues[propertyName] = value;
-            }
-            else
-            {
-                // Otherwise, add a new entry
-                _propertyValues.Add(propertyName, value);
-            }
+            // Add a new value, or update an existing one
+            _propertyValues.AddOrUpdate(propertyName, value);
 
             // Notify
             OnPropertyChanged(propertyName);
@@ -218,6 +215,16 @@ namespace Strato.Mvvm
             {
                 if (property.Value is IExtendedCommand command) command.RaiseCanExecuteChanged();
             }
+        }
+
+        /// <summary>
+        ///     Method raised when an <see cref="Exception"/> has been thrown.
+        /// </summary>
+        /// <param name="exception">
+        ///     The <see cref="Exception"/>.
+        /// </param>
+        public virtual void HandleException(Exception exception)
+        {
         }
 
         /// <summary>

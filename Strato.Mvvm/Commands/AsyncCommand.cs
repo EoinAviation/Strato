@@ -9,6 +9,8 @@ namespace Strato.Mvvm.Commands
     using System;
     using System.Threading.Tasks;
 
+    using Strato.Extensions;
+
     /// <summary>
     ///     A command whose sole purpose is to relay its functionality to other objects by invoking delegates
     ///     asynchronously.
@@ -24,6 +26,11 @@ namespace Strato.Mvvm.Commands
         ///     The <see cref="Func{TResult}"/> to determine whether or not the <see cref="_execute"/> can be executed.
         /// </summary>
         private readonly Func<bool> _canExecute;
+
+        /// <summary>
+        ///     The <see cref="Action{T}"/> to handle <see cref="Exception"/>s.
+        /// </summary>
+        private readonly Action<Exception> _onException;
 
         /// <summary>
         ///     A value indicating whether or not the current <see cref="AsyncCommand"/> is executing.
@@ -68,12 +75,20 @@ namespace Strato.Mvvm.Commands
         ///     If set to <c>true</c>, then the <paramref name="execute"/> can still be executed whilst it is already
         ///     executing. Otherwise, the <paramref name="execute"/> can not be executed whilst it is already running.
         /// </param>
-        public AsyncCommand(Func<Task> execute, Func<bool> canExecute = null, bool canExecuteConcurrently = false)
+        /// <param name="onException">
+        ///     The <see cref="Action{T}"/> to handle <see cref="Exception"/>s.
+        /// </param>
+        public AsyncCommand(
+            Func<Task> execute,
+            Func<bool> canExecute = null,
+            bool canExecuteConcurrently = false,
+            Action<Exception> onException = null)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute), "The function to execute cannot be null.");
             _canExecute = canExecute;
             IsExecuting = false;
             CanExecuteConcurrently = canExecuteConcurrently;
+            _onException = onException;
         }
 
         /// <summary>
@@ -115,7 +130,7 @@ namespace Strato.Mvvm.Commands
         /// <summary>
         ///     Executes the current <see cref="AsyncCommand"/>.
         /// </summary>
-        public void Execute() => Task.Run(ExecuteAsync);
+        public void Execute() => ExecuteAsync().FireAndForgetSafeAsync(_onException);
 
         /// <summary>
         ///     Determines whether the current <see cref="AsyncCommand"/> can be executed in its current state.

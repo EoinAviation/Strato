@@ -11,8 +11,9 @@ namespace Strato.Tests.Mvvm
     using System.ComponentModel;
 
     using NUnit.Framework;
-    using Strato.Mvvm;
+
     using Strato.Mvvm.Commands;
+    using Strato.Mvvm.ViewModels;
     using Strato.Tests.Mvvm.Mocks;
 
     /// <summary>

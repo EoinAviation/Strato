@@ -12,6 +12,7 @@ namespace Strato.Tests.Mvvm.Mocks
     using Strato.Mvvm;
     using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
+    using Strato.Mvvm.ViewModels;
 
     /// <summary>
     ///     The mocked <see cref="ViewModel"/>.

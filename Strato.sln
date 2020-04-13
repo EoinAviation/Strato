@@ -1,23 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{7775A22A-6D39-4E98-A578-BF9609DEC1FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Persistence.Abstractions", "Strato.Persistence.Abstractions\Strato.Persistence.Abstractions.csproj", "{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strato.Persistence.Abstractions", "Strato.Persistence.Abstractions\Strato.Persistence.Abstractions.csproj", "{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Persistence.EntityFrameworkCore", "Strato.Persistence.EntityFrameworkCore\Strato.Persistence.EntityFrameworkCore.csproj", "{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strato.Persistence.EntityFrameworkCore", "Strato.Persistence.EntityFrameworkCore\Strato.Persistence.EntityFrameworkCore.csproj", "{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Mvvm", "Strato.Mvvm\Strato.Mvvm.csproj", "{1FBE4B4B-256C-42D8-B460-9793AA010BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strato.Mvvm", "Strato.Mvvm\Strato.Mvvm.csproj", "{1FBE4B4B-256C-42D8-B460-9793AA010BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Tests", "Strato.Tests\Strato.Tests.csproj", "{7EB5A1C3-D6D8-4F4C-9191-BBEFDDBAADD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strato.Tests", "Strato.Tests\Strato.Tests.csproj", "{7EB5A1C3-D6D8-4F4C-9191-BBEFDDBAADD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{E15EBB1E-EA84-4359-8C77-E4F173F431D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strato.Mvvm.Demo", "Strato.Mvvm.Demo\Strato.Mvvm.Demo.csproj", "{E49E1FDC-3F4F-4C1A-96E6-34603BAB3FAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strato.Extensions", "Strato.Extensions\Strato.Extensions.csproj", "{C654F778-0237-4DE0-A3FA-65F6F7FBBD37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93} = {7775A22A-6D39-4E98-A578-BF9609DEC1FD}
-		{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA} = {7775A22A-6D39-4E98-A578-BF9609DEC1FD}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +41,24 @@ Global
 		{7EB5A1C3-D6D8-4F4C-9191-BBEFDDBAADD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB5A1C3-D6D8-4F4C-9191-BBEFDDBAADD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB5A1C3-D6D8-4F4C-9191-BBEFDDBAADD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49E1FDC-3F4F-4C1A-96E6-34603BAB3FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49E1FDC-3F4F-4C1A-96E6-34603BAB3FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49E1FDC-3F4F-4C1A-96E6-34603BAB3FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49E1FDC-3F4F-4C1A-96E6-34603BAB3FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C654F778-0237-4DE0-A3FA-65F6F7FBBD37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C654F778-0237-4DE0-A3FA-65F6F7FBBD37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C654F778-0237-4DE0-A3FA-65F6F7FBBD37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C654F778-0237-4DE0-A3FA-65F6F7FBBD37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC0DCE01-2BAA-4CC6-9878-53CF765E2A93} = {7775A22A-6D39-4E98-A578-BF9609DEC1FD}
+		{2A72FEE9-DDD0-4BD2-A999-8529BCE0CABA} = {7775A22A-6D39-4E98-A578-BF9609DEC1FD}
+		{E49E1FDC-3F4F-4C1A-96E6-34603BAB3FAF} = {E15EBB1E-EA84-4359-8C77-E4F173F431D3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AF12E14D-57F5-44B4-B65C-704FD43042C5}
 	EndGlobalSection
 EndGlobal

@@ -102,14 +102,10 @@ namespace Strato.Tests.Mvvm.Mocks
         /// <summary>
         ///     Initializes a new instance of the <see cref="MockViewModel"/> class.
         /// </summary>
-        /// <param name="eventAggregator">
-        ///     The <see cref="EventAggregator"/> instance.
-        /// </param>
-        public MockViewModel(EventAggregator eventAggregator = null)
-            : base(eventAggregator)
+        public MockViewModel()
         {
-            EventAggregator.Subscribe<MockEvent>(OnMockEvent);
-            EventAggregator.Subscribe<MockEvent>(OnMockEventAsync);
+            EventAggregator.Singleton.Subscribe<MockEvent>(OnMockEvent);
+            EventAggregator.Singleton.Subscribe<MockEvent>(OnMockEventAsync);
         }
 
         /// <summary>

@@ -15,7 +15,8 @@ namespace Strato.EventAggregator
     using Strato.EventAggregator.Abstractions;
 
     /// <summary>
-    ///     The default <see cref="IEventAggregator"/> implementation.
+    ///     The default <see cref="IEventAggregator"/> implementation for working with <see cref="IEvent"/>s within the
+    ///     current instance of an Application.
     /// </summary>
     public class EventAggregator : IEventAggregator
     {
@@ -132,7 +133,7 @@ namespace Strato.EventAggregator
         ///     The type of <see cref="IEvent"/>.
         /// </typeparam>
         /// <param name="event">
-        ///     The <typeparamref name="TEvent"/>.
+        ///     The <typeparamref name="TEvent"/> to publish.
         /// </param>
         public void Publish<TEvent>(TEvent @event)
             where TEvent : IEvent
@@ -163,7 +164,7 @@ namespace Strato.EventAggregator
         ///     The type of <see cref="IEvent"/>.
         /// </typeparam>
         /// <param name="event">
-        ///     The <typeparamref name="TEvent"/>.
+        ///     The <typeparamref name="TEvent"/> to publish.
         /// </param>
         /// <returns>
         ///     The <see cref="Task"/> representing the asynchronous operation.
@@ -191,7 +192,7 @@ namespace Strato.EventAggregator
         }
 
         /// <summary>
-        ///     Unsubscribes the given <see cref="Action{T}"/> from the all published <see cref="IEvent"/>s of type
+        ///     Unsubscribes the given <see cref="Action{T}"/> from all published <see cref="IEvent"/>s of type
         ///     <typeparamref name="TEvent"/>.
         /// </summary>
         /// <typeparam name="TEvent">
@@ -223,7 +224,7 @@ namespace Strato.EventAggregator
         }
 
         /// <summary>
-        ///     Unsubscribes the given <see cref="Func{T, Task}"/> from the all published <see cref="IEvent"/>s of type
+        ///     Unsubscribes the given <see cref="Func{T, Task}"/> from all published <see cref="IEvent"/>s of type
         ///     <typeparamref name="TEvent"/> which were published asynchronously.
         /// </summary>
         /// <typeparam name="TEvent">

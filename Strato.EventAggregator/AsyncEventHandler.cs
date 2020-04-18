@@ -17,13 +17,13 @@ namespace Strato.EventAggregator
     internal sealed class AsyncEventHandler
     {
         /// <summary>
-        ///     Gets the <see cref="Type"/> of the event being handled.
+        ///     Gets the <see cref="Type"/> of <see cref="IEvent"/> being handled.
         /// </summary>
         internal Type EventType { get; }
 
         /// <summary>
-        ///     Gets the <see cref="object"/> handling the event.
-        ///     This is assumed to be an <see cref="Action{T}"/>.
+        ///     Gets the <see cref="object"/> handling the <see cref="IEvent"/>.
+        ///     This is assumed to be an <see cref="Func{T, TResult}"/> where the result is a <see cref="Task"/>.
         /// </summary>
         internal object Handler { get; }
 
@@ -31,10 +31,10 @@ namespace Strato.EventAggregator
         ///     Initializes a new instance of the <see cref="AsyncEventHandler"/> class.
         /// </summary>
         /// <param name="eventType">
-        ///     The <see cref="Type"/> of the event being handled.
+        ///     The <see cref="Type"/> of the <see cref="IEvent"/> being handled.
         /// </param>
         /// <param name="handler">
-        ///     The <see cref="Func{T, TResult}"/> handling the event as an asynchronous operation.
+        ///     The <see cref="Func{T, TResult}"/> handling the <see cref="IEvent"/> as an asynchronous operation.
         /// </param>
         internal AsyncEventHandler(Type eventType, object handler)
         {
@@ -80,11 +80,11 @@ namespace Strato.EventAggregator
         }
 
         /// <summary>
-        ///     Gets the expected <see cref="Type"/> of the <see cref="Handler"/> given a <see cref="Type"/> for the
-        ///     parameter.
+        ///     Gets the expected <see cref="Type"/> of the <see cref="Handler"/> given the <see cref="IEvent"/>s
+        ///     <see cref="Type"/>.
         /// </summary>
         /// <param name="eventType">
-        ///     The <see cref="Type"/> of event to use as the parameter.
+        ///     The <see cref="Type"/> of <see cref="IEvent"/> to use as the parameter.
         /// </param>
         /// <returns>
         ///     The <see cref="Type"/> of handler.

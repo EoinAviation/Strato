@@ -16,12 +16,12 @@ namespace Strato.EventAggregator
     internal sealed class EventHandler
     {
         /// <summary>
-        ///     Gets the <see cref="Type"/> of the event being handled.
+        ///     Gets the <see cref="Type"/> of <see cref="IEvent"/> being handled.
         /// </summary>
         internal Type EventType { get; }
 
         /// <summary>
-        ///     Gets the <see cref="object"/> handling the event.
+        ///     Gets the <see cref="object"/> handling the <see cref="IEvent"/>.
         ///     This is assumed to be an <see cref="Action{T}"/>.
         /// </summary>
         internal object Handler { get; }
@@ -30,10 +30,10 @@ namespace Strato.EventAggregator
         ///     Initializes a new instance of the <see cref="EventHandler"/> class.
         /// </summary>
         /// <param name="eventType">
-        ///     The <see cref="Type"/> of the event being handled.
+        ///     The <see cref="Type"/> of the <see cref="IEvent"/> being handled.
         /// </param>
         /// <param name="handler">
-        ///     The <see cref="Action{T}"/> handling the event.
+        ///     The <see cref="Action{T}"/> handling the <see cref="IEvent"/>.
         /// </param>
         internal EventHandler(Type eventType, object handler)
         {
@@ -76,11 +76,11 @@ namespace Strato.EventAggregator
         }
 
         /// <summary>
-        ///     Gets the expected <see cref="Type"/> of the <see cref="Handler"/> given a <see cref="Type"/> for the
-        ///     parameter.
+        ///     Gets the expected <see cref="Type"/> of the <see cref="Handler"/> given the <see cref="IEvent"/>s
+        ///     <see cref="Type"/>.
         /// </summary>
         /// <param name="eventType">
-        ///     The <see cref="Type"/> of event to use as the parameter.
+        ///     The <see cref="Type"/> of <see cref="IEvent"/> to use as the parameter.
         /// </param>
         /// <returns>
         ///     The <see cref="Type"/> of handler.

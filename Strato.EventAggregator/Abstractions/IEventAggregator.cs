@@ -10,8 +10,8 @@ namespace Strato.EventAggregator.Abstractions
     using System.Threading.Tasks;
 
     /// <summary>
-    ///     The interface representing a class capable of publishing <see cref="IEvent"/>s, and subscribing to certain
-    ///     <see cref="IEvent"/>s.
+    ///     The interface representing a service that provides the ability to publish an <see cref="IEvent"/> from one
+    ///     entity to another in a loosely based fashion.
     /// </summary>
     public interface IEventAggregator
     {
@@ -49,7 +49,7 @@ namespace Strato.EventAggregator.Abstractions
         ///     The type of <see cref="IEvent"/>.
         /// </typeparam>
         /// <param name="event">
-        ///     The <typeparamref name="TEvent"/>.
+        ///     The <typeparamref name="TEvent"/> to publish.
         /// </param>
         void Publish<TEvent>(TEvent @event)
             where TEvent : IEvent;
@@ -62,7 +62,7 @@ namespace Strato.EventAggregator.Abstractions
         ///     The type of <see cref="IEvent"/>.
         /// </typeparam>
         /// <param name="event">
-        ///     The <typeparamref name="TEvent"/>.
+        ///     The <typeparamref name="TEvent"/> to publish.
         /// </param>
         /// <returns>
         ///     The <see cref="Task"/> representing the asynchronous operation.
@@ -71,7 +71,7 @@ namespace Strato.EventAggregator.Abstractions
             where TEvent : IEvent;
 
         /// <summary>
-        ///     Unsubscribes the given <see cref="Action{T}"/> from the all published <see cref="IEvent"/>s of type
+        ///     Unsubscribes the given <see cref="Action{T}"/> from all published <see cref="IEvent"/>s of type
         ///     <typeparamref name="TEvent"/>.
         /// </summary>
         /// <typeparam name="TEvent">
@@ -84,7 +84,7 @@ namespace Strato.EventAggregator.Abstractions
             where TEvent : IEvent;
 
         /// <summary>
-        ///     Unsubscribes the given <see cref="Func{T, Task}"/> from the all published <see cref="IEvent"/>s of type
+        ///     Unsubscribes the given <see cref="Func{T, Task}"/> from all published <see cref="IEvent"/>s of type
         ///     <typeparamref name="TEvent"/> which were published asynchronously.
         /// </summary>
         /// <typeparam name="TEvent">

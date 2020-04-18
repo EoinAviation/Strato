@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Strato.EventAggregator\Strato.EventAggregator.csproj" />
       <ProjectReference Include="..\Strato.Extensions\Strato.Extensions.csproj" />
     </ItemGroup>
 </Project>

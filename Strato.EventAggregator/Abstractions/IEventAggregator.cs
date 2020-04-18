@@ -43,6 +43,40 @@ namespace Strato.EventAggregator.Abstractions
             where TEvent : IEvent;
 
         /// <summary>
+        ///     Gets a value indicating whether or not the given <paramref name="handlerAction"/>  is subscribed to any
+        ///     <see cref="IEvent"/>s.
+        /// </summary>
+        /// <typeparam name="TEvent">
+        ///     The type of <see cref="IEvent"/>.
+        /// </typeparam>
+        /// <param name="handlerAction">
+        ///     The <see cref="Func{T, Task}"/> which may be handling the <typeparamref name="TEvent"/> as an
+        ///     asynchronous operation.
+        /// </param>
+        /// <returns>
+        ///     <c>true</c> if the <paramref name="handlerAction"/> is subscribed to any <see cref="IEvent"/>.
+        /// </returns>
+        bool IsSubscribed<TEvent>(Action<TEvent> handlerAction)
+            where TEvent : IEvent;
+
+        /// <summary>
+        ///     Gets a value indicating whether or not the given <paramref name="handlerAction"/>  is subscribed to any
+        ///     <see cref="IEvent"/>s.
+        /// </summary>
+        /// <typeparam name="TEvent">
+        ///     The type of <see cref="IEvent"/>.
+        /// </typeparam>
+        /// <param name="handlerAction">
+        ///     The <see cref="Func{T, Task}"/> which may be handling the <typeparamref name="TEvent"/> as an
+        ///     asynchronous operation.
+        /// </param>
+        /// <returns>
+        ///     <c>true</c> if the <paramref name="handlerAction"/> is subscribed to any <see cref="IEvent"/>.
+        /// </returns>
+        bool IsSubscribed<TEvent>(Func<TEvent, Task> handlerAction)
+            where TEvent : IEvent;
+
+        /// <summary>
         ///     Publishes the <typeparamref name="TEvent"/> to for all subscribers to handle.
         /// </summary>
         /// <typeparam name="TEvent">

@@ -8,7 +8,8 @@ namespace Strato.Tests.Mvvm.Mocks
 {
     using System;
     using System.Threading.Tasks;
-    using Strato.EventAggregator;
+    using Strato.EventAggregator.Abstractions;
+    using Strato.EventAggregator.Attributes;
     using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
     using Strato.Mvvm.ViewModels;
@@ -100,12 +101,31 @@ namespace Strato.Tests.Mvvm.Mocks
         public Guid ReceivedAsyncMockEventId { get; private set; }
 
         /// <summary>
+        ///     Gets the <see cref="Guid"/> of the <see cref="MockEvent"/> which was received, whose handler was
+        ///     was automatically subscribed.
+        /// </summary>
+        public Guid ReceivedAutoMockEventId { get; private set; }
+
+        /// <summary>
+        ///     Gets the <see cref="Guid"/> of the <see cref="MockEvent"/> which was received asynchronously, whose
+        ///     handler was was automatically subscribed.
+        /// </summary>
+        public Guid ReceivedAutoAsyncMockEventId { get; private set; }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="MockViewModel"/> class.
         /// </summary>
-        public MockViewModel()
+        /// <param name="eventAggregator">
+        ///     The optional <see cref="IEventAggregator"/>.
+        /// </param>
+        public MockViewModel(IEventAggregator eventAggregator = null)
+            : base(eventAggregator)
         {
-            EventAggregator.Singleton.Subscribe<MockEvent>(OnMockEvent);
-            EventAggregator.Singleton.Subscribe<MockEvent>(OnMockEventAsync);
+            if (eventAggregator != null)
+            {
+                eventAggregator.Subscribe<MockEvent>(OnMockEvent);
+                eventAggregator.Subscribe<MockEvent>(OnMockEventAsync);
+            }
         }
 
         /// <summary>
@@ -144,6 +164,34 @@ namespace Strato.Tests.Mvvm.Mocks
         {
             await Task.Yield();
             ReceivedAsyncMockEventId = mockEvent.Guid;
+        }
+
+        /// <summary>
+        ///     Handles the <see cref="MockEvent"/>.
+        /// </summary>
+        /// <param name="mockEvent">
+        ///     The <see cref="MockEvent"/> to handle.
+        /// </param>
+        [EventHandler]
+        public void AutoOnMockEvent(MockEvent mockEvent)
+        {
+            ReceivedAutoMockEventId = mockEvent.Guid;
+        }
+
+        /// <summary>
+        ///     Handles the <see cref="MockEvent"/> as an asynchronous operation.
+        /// </summary>
+        /// <param name="mockEvent">
+        ///     The <see cref="MockEvent"/> to handle.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        [EventHandler]
+        public async Task AutoOnMockEventAsync(MockEvent mockEvent)
+        {
+            await Task.Yield();
+            ReceivedAutoAsyncMockEventId = mockEvent.Guid;
         }
     }
 }

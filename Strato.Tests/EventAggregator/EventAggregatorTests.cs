@@ -28,11 +28,12 @@ namespace Strato.Tests.EventAggregator
         public void EventsCanBePublished()
         {
             // Arrange
-            MockViewModel viewModel = new MockViewModel();
+            IEventAggregator eventAggregator = new EventAggregator();
+            MockViewModel viewModel = new MockViewModel(eventAggregator);
             MockEvent @event = new MockEvent();
 
             // Act
-            EventAggregator.Singleton.Publish(@event);
+            eventAggregator.Publish(@event);
 
             // Assert
             Assert.IsNotNull(viewModel.ReceivedMockEventId);
@@ -48,11 +49,12 @@ namespace Strato.Tests.EventAggregator
         public async Task EventsCanBePublishedAsync()
         {
             // Arrange
-            MockViewModel viewModel = new MockViewModel();
+            IEventAggregator eventAggregator = new EventAggregator();
+            MockViewModel viewModel = new MockViewModel(eventAggregator);
             MockEvent @event = new MockEvent();
 
             // Act
-            await EventAggregator.Singleton.PublishAsync(@event);
+            await eventAggregator.PublishAsync(@event);
 
             // Assert
             Assert.IsNotNull(viewModel.ReceivedAsyncMockEventId);

@@ -9,9 +9,11 @@ namespace Strato.Tests.Mvvm
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-
+    using System.Threading.Tasks;
     using NUnit.Framework;
-
+    using Strato.EventAggregator;
+    using Strato.EventAggregator.Abstractions;
+    using Strato.EventAggregator.Attributes;
     using Strato.Mvvm.Commands;
     using Strato.Mvvm.ViewModels;
     using Strato.Tests.Mvvm.Mocks;
@@ -22,6 +24,64 @@ namespace Strato.Tests.Mvvm
     [TestFixture]
     public class ViewModelTests
     {
+        /// <summary>
+        ///     Ensures when the <see cref="ViewModel"/> is constructed with an <see cref="IEventAggregator"/>,
+        ///     all methods with a <see cref="EventHandlerAttribute"/> will automatically subscribe to their required
+        ///     events.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="Task"/>.
+        /// </returns>
+        [Test]
+        public async Task ViewModelAutomaticallySubscribesEventHandlers()
+        {
+            // Arrange
+            IEventAggregator eventAggregator = new EventAggregator();
+            MockViewModel viewModelWithoutAggregator = new MockViewModel();
+            MockViewModel viewModelWithAggregator = new MockViewModel(eventAggregator);
+
+            // Act
+            MockEvent syncMockEvent = new MockEvent();
+            MockEvent asyncMockEvent = new MockEvent();
+            eventAggregator.Publish(syncMockEvent);
+            await eventAggregator.PublishAsync(asyncMockEvent);
+
+            // Assert
+            // View Model without shouldn't have anything
+            Assert.AreEqual(default(Guid), viewModelWithoutAggregator.ReceivedMockEventId);
+            Assert.AreEqual(default(Guid), viewModelWithoutAggregator.ReceivedAsyncMockEventId);
+            Assert.AreEqual(default(Guid), viewModelWithoutAggregator.ReceivedAutoMockEventId);
+            Assert.AreEqual(default(Guid), viewModelWithoutAggregator.ReceivedAutoAsyncMockEventId);
+
+            // View Model with should have something
+            Assert.AreEqual(syncMockEvent.Guid, viewModelWithAggregator.ReceivedMockEventId);
+            Assert.AreEqual(syncMockEvent.Guid, viewModelWithAggregator.ReceivedAutoMockEventId);
+            Assert.AreEqual(asyncMockEvent.Guid, viewModelWithAggregator.ReceivedAsyncMockEventId);
+            Assert.AreEqual(asyncMockEvent.Guid, viewModelWithAggregator.ReceivedAutoAsyncMockEventId);
+        }
+
+        /// <summary>
+        ///     Ensures when the <see cref="ViewModel"/> is constructed with an <see cref="IEventAggregator"/>,
+        ///     all methods with a <see cref="EventHandlerAttribute"/> will automatically unsubscribe from their
+        ///     required events upon disposal.
+        /// </summary>
+        [Test]
+        public void ViewModelAutomaticallyUnsubscribesEventHandlers()
+        {
+            // Arrange
+            IEventAggregator eventAggregator = new EventAggregator();
+
+            // Act / Assert
+            MockViewModel viewModel = new MockViewModel(eventAggregator);
+            Assert.IsTrue(eventAggregator.IsSubscribed<MockEvent>(viewModel.AutoOnMockEvent));
+            Assert.IsTrue(eventAggregator.IsSubscribed<MockEvent>(viewModel.AutoOnMockEventAsync));
+
+            // Act / Assert
+            viewModel.Dispose();
+            Assert.IsFalse(eventAggregator.IsSubscribed<MockEvent>(viewModel.AutoOnMockEvent));
+            Assert.IsFalse(eventAggregator.IsSubscribed<MockEvent>(viewModel.AutoOnMockEventAsync));
+        }
+
         /// <summary>
         ///     Ensures that property values can be set, and retrieved.
         /// </summary>

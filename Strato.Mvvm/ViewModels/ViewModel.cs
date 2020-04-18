@@ -13,6 +13,8 @@ namespace Strato.Mvvm.ViewModels
     using System.Reflection;
     using System.Runtime.CompilerServices;
 
+    using Strato.EventAggregator.Abstractions;
+    using Strato.EventAggregator.Extensions;
     using Strato.Extensions;
     using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
@@ -21,7 +23,7 @@ namespace Strato.Mvvm.ViewModels
     ///     The base View Model implementing <see cref="INotifyPropertyChanging"/> and
     ///     <see cref="INotifyPropertyChanged"/>.
     /// </summary>
-    public abstract class ViewModel : INotifyPropertyChanging, INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanging, INotifyPropertyChanged, IDisposable
     {
         /// <summary>
         ///     The <see cref="IReadOnlyCollection{T}"/> of property names who only have a getter methods.
@@ -41,23 +43,35 @@ namespace Strato.Mvvm.ViewModels
         private readonly Dictionary<string, object> _propertyValues;
 
         /// <summary>
-        ///     Event raised when the value of a property is about to change.
+        ///     Gets the <see cref="IEventAggregator"/>.
+        /// </summary>
+        protected IEventAggregator EventAggregator { get; }
+
+        /// <summary>
+        ///     The event raised when the value of a property is about to change.
         /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
 
         /// <summary>
-        ///     Event raised when the value of a property has changed.
+        ///     The event raised when the value of a property has changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ViewModel"/> class.
         /// </summary>
-        protected ViewModel()
+        /// <param name="eventAggregator">
+        ///     The <see cref="IEventAggregator"/> to use.
+        /// </param>
+        protected ViewModel(IEventAggregator eventAggregator = null)
         {
             _propertyValues = new Dictionary<string, object>();
             _getOnlyProperties = FindGetOnlyProperties().ToList().AsReadOnly();
             _explicitlyDependentProperties = FindDependentProperties().ToList().AsReadOnly();
+
+            // Setup the Event Aggregator
+            EventAggregator = eventAggregator;
+            EventAggregator?.SubscribeAllHandlers(this);
         }
 
         /// <summary>
@@ -242,6 +256,46 @@ namespace Strato.Mvvm.ViewModels
                     nameof(propertyName),
                     "The property name cannot be null or empty");
             }
+        }
+
+        /// <summary>
+        ///     Releases any unmanaged resources used by the current <see cref="ViewModel"/>.
+        /// </summary>
+        private void ReleaseUnmanagedResources()
+        {
+            // Unsubscribe from all events
+            EventAggregator.UnsubscribeAllHandlers(this);
+        }
+
+        /// <summary>
+        ///     Disposes of the current <see cref="ViewModel"/> instance.
+        /// </summary>
+        /// <param name="disposing">
+        ///     Whether or not we're being called from the <see cref="Dispose()"/> method.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            ReleaseUnmanagedResources();
+            if (disposing)
+            {
+            }
+        }
+
+        /// <summary>
+        ///     Disposes of the current <see cref="ViewModel"/> instance.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///     Finalizes an instance of the <see cref="ViewModel"/> class.
+        /// </summary>
+        ~ViewModel()
+        {
+            Dispose(false);
         }
     }
 }

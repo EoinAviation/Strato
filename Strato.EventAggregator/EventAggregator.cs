@@ -43,16 +43,6 @@ namespace Strato.EventAggregator
         private readonly SemaphoreSlim _asyncEventHandlersSemaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
-        ///     Gets the singleton instance of the <see cref="EventAggregator"/>.
-        /// </summary>
-        public static EventAggregator Singleton { get; }
-
-        /// <summary>
-        ///     Initializes static members of the <see cref="EventAggregator"/> class.
-        /// </summary>
-        static EventAggregator() => Singleton = new EventAggregator();
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="EventAggregator"/> class.
         /// </summary>
         public EventAggregator()
@@ -124,6 +114,46 @@ namespace Strato.EventAggregator
             {
                 _asyncEventHandlersSemaphore.Release();
             }
+        }
+
+        /// <summary>
+        ///     Gets a value indicating whether or not the given <paramref name="handlerAction"/>  is subscribed to any
+        ///     <see cref="IEvent"/>s.
+        /// </summary>
+        /// <typeparam name="TEvent">
+        ///     The type of <see cref="IEvent"/>.
+        /// </typeparam>
+        /// <param name="handlerAction">
+        ///     The <see cref="Func{T, Task}"/> which may be handling the <typeparamref name="TEvent"/> as an
+        ///     asynchronous operation.
+        /// </param>
+        /// <returns>
+        ///     <c>true</c> if the <paramref name="handlerAction"/> is subscribed to any <see cref="IEvent"/>.
+        /// </returns>
+        public bool IsSubscribed<TEvent>(Action<TEvent> handlerAction)
+            where TEvent : IEvent
+        {
+            return _eventHandlers.Any(h => h.Handler.Equals(handlerAction));
+        }
+
+        /// <summary>
+        ///     Gets a value indicating whether or not the given <paramref name="handlerAction"/>  is subscribed to any
+        ///     <see cref="IEvent"/>s.
+        /// </summary>
+        /// <typeparam name="TEvent">
+        ///     The type of <see cref="IEvent"/>.
+        /// </typeparam>
+        /// <param name="handlerAction">
+        ///     The <see cref="Func{T, Task}"/> which may be handling the <typeparamref name="TEvent"/> as an
+        ///     asynchronous operation.
+        /// </param>
+        /// <returns>
+        ///     <c>true</c> if the <paramref name="handlerAction"/> is subscribed to any <see cref="IEvent"/>.
+        /// </returns>
+        public bool IsSubscribed<TEvent>(Func<TEvent, Task> handlerAction)
+            where TEvent : IEvent
+        {
+            return _asyncEventHandlers.Any(h => h.Handler.Equals(handlerAction));
         }
 
         /// <summary>

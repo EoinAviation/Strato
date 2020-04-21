@@ -6,6 +6,7 @@
     <Product />
     <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

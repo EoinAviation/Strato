@@ -18,7 +18,7 @@ namespace Strato.EventAggregator.Extensions
     /// <summary>
     ///     The <see cref="IEventAggregator"/> extension methods.
     /// </summary>
-    public static class IEventAggregatorExtensions
+    public static class EventAggregatorExtensions
     {
         /// <summary>
         ///     Automatically subscribes all methods with the <see cref="EventHandlerAttribute"/> to
@@ -200,6 +200,11 @@ namespace Strato.EventAggregator.Extensions
         {
             // Get the type of IEvent we're dealing with
             Type eventType = handlerType.GenericTypeArguments.First();
+
+            Console.WriteLine("Getting Subscription method.");
+            Console.WriteLine($"Event Aggregator: {(eventAggregator != null ? "not null" : "is null")}.");
+            Console.WriteLine($"Method Name: \"{methodName}\".");
+            Console.WriteLine($"Handler Type: \"{handlerType}\".");
 
             // Get all possible methods we could have
             MethodInfo[] possibleMethods = eventAggregator.GetType().GetMethods().Where(m => m.Name == methodName).ToArray();

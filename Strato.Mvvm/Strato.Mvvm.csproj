@@ -6,12 +6,11 @@
         <Authors>Strato Systems Pty. Ltd.</Authors>
         <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
 
     <PropertyGroup>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <Version>1.0.2</Version>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 

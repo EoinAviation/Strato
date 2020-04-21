@@ -32,6 +32,9 @@ namespace Strato.EventAggregator.Extensions
         /// </param>
         public static void SubscribeAllHandlers(this IEventAggregator eventAggregator, object targetObject)
         {
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (targetObject == null) throw new ArgumentNullException(nameof(targetObject));
+
             // Get all handlers
             List<object> handlers = GetHandlers(targetObject).ToList();
 
@@ -55,6 +58,9 @@ namespace Strato.EventAggregator.Extensions
         /// </param>
         public static void UnsubscribeAllHandlers(this IEventAggregator eventAggregator, object targetObject)
         {
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (targetObject == null) throw new ArgumentNullException(nameof(targetObject));
+
             // Get all handlers
             List<object> handlers = GetHandlers(targetObject).ToList();
 
@@ -200,11 +206,6 @@ namespace Strato.EventAggregator.Extensions
         {
             // Get the type of IEvent we're dealing with
             Type eventType = handlerType.GenericTypeArguments.First();
-
-            Console.WriteLine("Getting Subscription method.");
-            Console.WriteLine($"Event Aggregator: {(eventAggregator != null ? "not null" : "is null")}.");
-            Console.WriteLine($"Method Name: \"{methodName}\".");
-            Console.WriteLine($"Handler Type: \"{handlerType}\".");
 
             // Get all possible methods we could have
             MethodInfo[] possibleMethods = eventAggregator.GetType().GetMethods().Where(m => m.Name == methodName).ToArray();

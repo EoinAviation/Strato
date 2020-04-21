@@ -264,7 +264,7 @@ namespace Strato.Mvvm.ViewModels
         private void ReleaseUnmanagedResources()
         {
             // Unsubscribe from all events
-            EventAggregator.UnsubscribeAllHandlers(this);
+            EventAggregator?.UnsubscribeAllHandlers(this);
         }
 
         /// <summary>

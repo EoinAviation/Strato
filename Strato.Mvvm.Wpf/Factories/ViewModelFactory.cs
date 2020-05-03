@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Strato.Mvvm.ViewModels
+namespace Strato.Mvvm.Wpf.Factories
 {
     using System;
     using System.Collections.Generic;
@@ -12,12 +12,14 @@ namespace Strato.Mvvm.ViewModels
     using System.Reflection;
 
     using Microsoft.Extensions.DependencyInjection;
+
     using Strato.Mvvm.Navigation;
+    using Strato.Mvvm.ViewModels;
 
     /// <summary>
     ///     The <see cref="ViewModel"/> factory.
     /// </summary>
-    public static class ViewModelFactory
+    internal static class ViewModelFactory
     {
         /// <summary>
         ///     Builds a new <typeparamref name="TViewModel"/> instance using the given <see cref="IServiceProvider"/>.

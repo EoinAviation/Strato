@@ -12,6 +12,7 @@ namespace Strato.Mvvm.Wpf.Navigation
 
     using Strato.Mvvm.Navigation;
     using Strato.Mvvm.ViewModels;
+    using Strato.Mvvm.Wpf.Factories;
 
     /// <summary>
     ///     The <see cref="INavigationContext"/> implementation.

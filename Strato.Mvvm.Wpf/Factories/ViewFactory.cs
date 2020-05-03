@@ -4,13 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Strato.Mvvm.Wpf
+namespace Strato.Mvvm.Wpf.Factories
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-
     using Microsoft.Extensions.DependencyInjection;
     using Strato.Mvvm.Navigation;
     using Strato.Mvvm.ViewModels;
@@ -18,7 +17,7 @@ namespace Strato.Mvvm.Wpf
     /// <summary>
     ///     The <see cref="IView"/> factory.
     /// </summary>
-    public static class ViewFactory
+    internal static class ViewFactory
     {
         /// <summary>
         ///     Builds a new <typeparamref name="TView"/> instance.

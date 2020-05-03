@@ -169,20 +169,21 @@ namespace Strato.EventAggregator
             where TEvent : IEvent
         {
             _eventHandlersSemaphore.Wait();
+            EventHandler[] handlers;
             try
             {
                 // Get all handlers for the current event
-                EventHandler[] handlers = _eventHandlers.Where(h => h.EventType == typeof(TEvent)).ToArray();
-
-                // Handle
-                foreach (EventHandler handler in handlers)
-                {
-                    handler.Handle(@event);
-                }
+                handlers = _eventHandlers.Where(h => h.EventType == typeof(TEvent)).ToArray();
             }
             finally
             {
                 _eventHandlersSemaphore.Release();
+            }
+
+            // Handle
+            foreach (EventHandler handler in handlers)
+            {
+                handler.Handle(@event);
             }
         }
 
@@ -203,21 +204,22 @@ namespace Strato.EventAggregator
             where TEvent : IEvent
         {
             await _asyncEventHandlersSemaphore.WaitAsync();
+            AsyncEventHandler[] handlers;
             try
             {
                 // Get all handlers for the current event
-                AsyncEventHandler[] handlers = _asyncEventHandlers.Where(h => h.EventType == typeof(TEvent)).ToArray();
-
-                // Wait for all tasks to complete
-                if (handlers.Any())
-                {
-                    Task[] tasks = handlers.Select(h => h.HandleAsync(@event)).ToArray();
-                    await Task.WhenAll(tasks);
-                }
+                handlers = _asyncEventHandlers.Where(h => h.EventType == typeof(TEvent)).ToArray();
             }
             finally
             {
                 _asyncEventHandlersSemaphore.Release();
+            }
+
+            // Wait for all tasks to complete
+            if (handlers.Any())
+            {
+                Task[] tasks = handlers.Select(h => h.HandleAsync(@event)).ToArray();
+                await Task.WhenAll(tasks);
             }
         }
 

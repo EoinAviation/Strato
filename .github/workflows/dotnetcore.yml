@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_unix:
-    name: "Build and Test (Unix)"
+    name: "CI/CD Unix"
     runs-on: [ubuntu-latest, macos-latest]
 
     steps:
@@ -21,7 +21,7 @@ jobs:
         
     - name: Restore dependencies
       run: |
-        dotnet restore
+        dotnet restore Strato.sln
       
     - name: Build
       run: dotnet build Strato.sln --configuration Release --no-restore
@@ -35,7 +35,7 @@ jobs:
         dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
 
   build_win:
-    name: "Build and Test (Windows)"
+    name: "CI/CD Windows"
     runs-on: [windows-latest]
 
     steps:
@@ -48,7 +48,7 @@ jobs:
         
     - name: Restore dependencies
       run: |
-        dotnet restore
+        dotnet restore Strato.Win.sln
       
     - name: Build
       run: dotnet build Strato.Win.sln --configuration Release --no-restore

@@ -24,14 +24,14 @@ jobs:
         dotnet restore
       
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build Strato.sln --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test Strato.sln --no-restore --verbosity normal
       
     - name: Release
       run: |
-        dotnet pack --configuration Release
+        dotnet pack Strato.sln --configuration Release
         dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
 
   build_win:
@@ -51,13 +51,12 @@ jobs:
         dotnet restore
       
     - name: Build
-      run: dotnet build */*.csproj --configuration Release --no-restore
+      run: dotnet build Strato.Win.sln --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test Strato.Win.sln --no-restore --verbosity normal
       
     - name: Release
       run: |
-        dotnet pack --configuration Release
+        dotnet pack Strato.Win.sln --configuration Release
         dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-

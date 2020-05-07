@@ -7,8 +7,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    runs-on: [macos-latest]
+  build_unix:
+    name: "Build and Test (Unix)"
+    runs-on: [ubuntu-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,6 +25,33 @@ jobs:
       
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+      
+    - name: Release
+      run: |
+        dotnet pack --configuration Release
+        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+
+  build_win:
+    name: "Build and Test (Windows)"
+    runs-on: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        
+    - name: Restore dependencies
+      run: |
+        dotnet restore
+      
+    - name: Build
+      run: dotnet build --project */*.proj --configuration Release --no-restore
       
     - name: Test
       run: dotnet test --no-restore --verbosity normal

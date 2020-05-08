@@ -9,7 +9,10 @@ on:
 jobs:
   build_unix:
     name: "CI/CD Unix"
-    runs-on: [ubuntu-18.04]
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
 
     steps:
     - uses: actions/checkout@v2

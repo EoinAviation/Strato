@@ -7,9 +7,10 @@ on:
     branches: [ master ]
 
 jobs:
-  build_unix:
-    name: "CI/CD Unix"
+  main_job:
+    name: "CI/CD"
     strategy:
+      fail-fast: false
       matrix:
         platform: [windows-latest, ubuntu-latest, macos-latest]
         solution: ["Strato.sln", "Strato.Win.sln"]

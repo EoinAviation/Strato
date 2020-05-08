@@ -11,7 +11,15 @@ jobs:
     name: "CI/CD Unix"
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest]
+        platform: [windows-latest, ubuntu-latest, macos-latest]
+        solution: ["Strato.sln", "Strato.Win.sln"]
+        exclude:
+          - platform: windows-latest
+            solution: "Strato.sln"
+          - platform: ubuntu-latest
+            solution: "Strato.Win.sln"
+          - platform: macos-latest
+            solution: "Strato.Win.sln"
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -24,42 +32,15 @@ jobs:
         
     - name: Restore dependencies
       run: |
-        dotnet restore Strato.sln
+        dotnet restore ${{ matrix.solution }}
       
     - name: Build
-      run: dotnet build Strato.sln --configuration Release --no-restore
+      run: dotnet build ${{ matrix.solution }} --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test Strato.sln --no-restore --verbosity normal
+      run: dotnet test ${{ matrix.solution }} --no-restore --verbosity normal
       
     - name: Release
       run: |
-        dotnet pack Strato.sln --configuration Release
-        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-
-  build_win:
-    name: "CI/CD Windows"
-    runs-on: [windows-latest]
-
-    steps:
-    - uses: actions/checkout@v2
-      
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-        
-    - name: Restore dependencies
-      run: |
-        dotnet restore Strato.Win.sln
-      
-    - name: Build
-      run: dotnet build Strato.Win.sln --configuration Release --no-restore
-      
-    - name: Test
-      run: dotnet test Strato.Win.sln --no-restore --verbosity normal
-      
-    - name: Release
-      run: |
-        dotnet pack Strato.Win.sln --configuration Release
+        dotnet pack ${{ matrix.solution }} --configuration Release
         dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

@@ -5,6 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Strato Systems Pty. Ltd.</Authors>
     <Company>Strato Systems Pty. Ltd.</Company>
+      <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
+      <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

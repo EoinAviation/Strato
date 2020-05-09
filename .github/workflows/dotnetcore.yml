@@ -7,8 +7,21 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    runs-on: [macos-latest]
+  main_job:
+    name: "CI/CD"
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest, ubuntu-latest, macos-latest]
+        solution: ["Strato.sln", "Strato.Win.sln"]
+        exclude:
+          - platform: windows-latest
+            solution: "Strato.sln"
+          - platform: ubuntu-latest
+            solution: "Strato.Win.sln"
+          - platform: macos-latest
+            solution: "Strato.Win.sln"
+    runs-on: ${{ matrix.platform }}
 
     steps:
     - uses: actions/checkout@v2
@@ -17,21 +30,18 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-        source-url: https://nuget.pkg.github.com/eoinaviation/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         
     - name: Restore dependencies
       run: |
-        dotnet restore --source "https://nuget.pkg.github.com/eoinaviation/index.json" --source "https://api.nuget.org/v3/index.json"
+        dotnet restore ${{ matrix.solution }}
       
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build ${{ matrix.solution }} --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test ${{ matrix.solution }} --no-restore --verbosity normal
       
     - name: Release
       run: |
-        dotnet pack --configuration Release
-        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --source "https://nuget.pkg.github.com/eoinaviation/index.json" --api-key ${{secrets.GITHUB_TOKEN}}
+        dotnet pack ${{ matrix.solution }} --configuration Release
+        dotnet nuget push **/*.nupkg --skip-duplicate --no-symbols true --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

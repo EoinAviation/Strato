@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainWindowViewModel.cs" company="Strato Systems Pty. Ltd.">
+// <copyright file="FirstDemoViewModel.cs" company="Strato Systems Pty. Ltd.">
 //   Copyright (c) Strato Systems Pty. Ltd. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,14 +11,16 @@ namespace Strato.Mvvm.Demo.ViewModels
     using System.Threading.Tasks;
 
     using Strato.EventAggregator;
+    using Strato.EventAggregator.Abstractions;
     using Strato.Mvvm.Commands;
     using Strato.Mvvm.Demo.Events;
+    using Strato.Mvvm.Navigation;
     using Strato.Mvvm.ViewModels;
 
     /// <summary>
-    ///     The Main Windows <see cref="ViewModel"/>.
+    ///     The first demonstration <see cref="ViewModel"/>.
     /// </summary>
-    public class MainWindowViewModel : ViewModel
+    public class FirstDemoViewModel : ViewModel
     {
         /// <summary>
         ///     Gets or sets the input text.
@@ -92,14 +94,28 @@ namespace Strato.Mvvm.Demo.ViewModels
         public RelayCommand DoStuffSyncCommand => Get(new RelayCommand(() => DoStuffAsyncCommand.Execute(), DoStuffAsyncCommand.CanExecute));
 
         /// <summary>
-        ///     Gets the <see cref="RelayCommand"/> that demonstrates the <see cref="EventAggregator"/>.
+        ///     Gets the <see cref="RelayCommand"/> that demonstrates the <see cref="INavigationContext"/>.
+        /// </summary>
+        public RelayCommand ChangeViewCommand => Get(new RelayCommand(ChangeView));
+
+        /// <summary>
+        ///     Gets the <see cref="RelayCommand"/> that demonstrates the <see cref="IEventAggregator"/>.
         /// </summary>
         public RelayCommand CloseCommand => Get(new RelayCommand(Close));
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
+        ///     Initializes a new instance of the <see cref="FirstDemoViewModel"/> class.
         /// </summary>
-        public MainWindowViewModel()
+        /// <param name="eventAggregator">
+        ///     The <see cref="IEventAggregator"/>.
+        /// </param>
+        /// <param name="navigationContext">
+        ///     the <see cref="INavigationContext"/>.
+        /// </param>
+        public FirstDemoViewModel(
+            IEventAggregator eventAggregator,
+            INavigationContext navigationContext)
+            : base(eventAggregator, navigationContext)
         {
             Names = new ObservableCollection<string>();
             AsyncDemoList = new ObservableCollection<string>();
@@ -137,11 +153,19 @@ namespace Strato.Mvvm.Demo.ViewModels
         }
 
         /// <summary>
+        ///     Navigates to the <see cref="SecondDemoViewModel"/>.
+        /// </summary>
+        public void ChangeView()
+        {
+            NavigationContext.NavigateTo<SecondDemoViewModel>();
+        }
+
+        /// <summary>
         ///     Closes the current <see cref="ViewModel"/> and any associated Views.
         /// </summary>
         public void Close()
         {
-            EventAggregator.Singleton.Publish(new CloseEvent());
+            EventAggregator.Publish(new CloseEvent(this));
         }
 
         /// <summary>

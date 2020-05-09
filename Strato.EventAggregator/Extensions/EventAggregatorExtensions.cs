@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IEventAggregatorExtensions.cs" company="Strato Systems Pty. Ltd.">
+// <copyright file="EventAggregatorExtensions.cs" company="Strato Systems Pty. Ltd.">
 //   Copyright (c) Strato Systems Pty. Ltd. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ namespace Strato.EventAggregator.Extensions
     /// <summary>
     ///     The <see cref="IEventAggregator"/> extension methods.
     /// </summary>
-    public static class IEventAggregatorExtensions
+    public static class EventAggregatorExtensions
     {
         /// <summary>
         ///     Automatically subscribes all methods with the <see cref="EventHandlerAttribute"/> to
@@ -32,6 +32,9 @@ namespace Strato.EventAggregator.Extensions
         /// </param>
         public static void SubscribeAllHandlers(this IEventAggregator eventAggregator, object targetObject)
         {
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (targetObject == null) throw new ArgumentNullException(nameof(targetObject));
+
             // Get all handlers
             List<object> handlers = GetHandlers(targetObject).ToList();
 
@@ -55,6 +58,9 @@ namespace Strato.EventAggregator.Extensions
         /// </param>
         public static void UnsubscribeAllHandlers(this IEventAggregator eventAggregator, object targetObject)
         {
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (targetObject == null) throw new ArgumentNullException(nameof(targetObject));
+
             // Get all handlers
             List<object> handlers = GetHandlers(targetObject).ToList();
 

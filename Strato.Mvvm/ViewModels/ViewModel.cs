@@ -18,6 +18,7 @@ namespace Strato.Mvvm.ViewModels
     using Strato.Extensions;
     using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
+    using Strato.Mvvm.Navigation;
 
     /// <summary>
     ///     The base View Model implementing <see cref="INotifyPropertyChanging"/> and
@@ -48,6 +49,11 @@ namespace Strato.Mvvm.ViewModels
         protected IEventAggregator EventAggregator { get; }
 
         /// <summary>
+        ///     Gets the <see cref="INavigationContext"/>.
+        /// </summary>
+        protected INavigationContext NavigationContext { get; }
+
+        /// <summary>
         ///     The event raised when the value of a property is about to change.
         /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
@@ -63,7 +69,10 @@ namespace Strato.Mvvm.ViewModels
         /// <param name="eventAggregator">
         ///     The <see cref="IEventAggregator"/> to use.
         /// </param>
-        protected ViewModel(IEventAggregator eventAggregator = null)
+        /// <param name="navigationContext">
+        ///     The <see cref="INavigationContext"/> to use.
+        /// </param>
+        protected ViewModel(IEventAggregator eventAggregator = null, INavigationContext navigationContext = null)
         {
             _propertyValues = new Dictionary<string, object>();
             _getOnlyProperties = FindGetOnlyProperties().ToList().AsReadOnly();
@@ -72,6 +81,8 @@ namespace Strato.Mvvm.ViewModels
             // Setup the Event Aggregator
             EventAggregator = eventAggregator;
             EventAggregator?.SubscribeAllHandlers(this);
+
+            NavigationContext = navigationContext;
         }
 
         /// <summary>
@@ -232,6 +243,19 @@ namespace Strato.Mvvm.ViewModels
         }
 
         /// <summary>
+        ///     Instructs the <see cref="INavigationContext"/> to request navigation from the current
+        ///     <see cref="ViewModel"/> to another.
+        /// </summary>
+        /// <typeparam name="TViewModel">
+        ///     The type of <see cref="ViewModel"/> to navigate to.
+        /// </typeparam>
+        protected void NavigateTo<TViewModel>()
+            where TViewModel : ViewModel
+        {
+            NavigationContext?.NavigateTo<TViewModel>();
+        }
+
+        /// <summary>
         ///     Method raised when an <see cref="Exception"/> has been thrown.
         /// </summary>
         /// <param name="exception">
@@ -264,7 +288,7 @@ namespace Strato.Mvvm.ViewModels
         private void ReleaseUnmanagedResources()
         {
             // Unsubscribe from all events
-            EventAggregator.UnsubscribeAllHandlers(this);
+            EventAggregator?.UnsubscribeAllHandlers(this);
         }
 
         /// <summary>

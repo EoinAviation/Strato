@@ -1,16 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Strato Systems Pty. Ltd.</Authors>
+    <Company>Strato Systems Pty. Ltd.</Company>
     <RepositoryUrl>https://github.com/EoinAviation/Strato</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageVersion>1.0.0</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Strato.Analyzers" Version="1.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Strato.Mvvm\Strato.Mvvm.csproj" />
   </ItemGroup>
 
 </Project>

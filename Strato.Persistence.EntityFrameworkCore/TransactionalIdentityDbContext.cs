@@ -22,6 +22,17 @@ namespace Strato.Persistence.EntityFrameworkCore
     public abstract class TransactionalIdentityDbContext : IdentityDbContext, IDbContext, ITransactionEnlistable, ITransactionFactory
     {
         /// <summary>
+        ///     Initializes a new instance of the <see cref="TransactionalIdentityDbContext"/> class.
+        /// </summary>
+        /// <param name="options">
+        ///     The <see cref="DbContextOptions"/>.
+        /// </param>
+        protected TransactionalIdentityDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+
+        /// <summary>
         ///     Gets the currently enlisted <see cref="ITransaction"/>.
         /// </summary>
         /// <returns>

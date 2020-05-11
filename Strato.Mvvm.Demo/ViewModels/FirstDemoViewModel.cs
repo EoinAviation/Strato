@@ -10,7 +10,6 @@ namespace Strato.Mvvm.Demo.ViewModels
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
 
-    using Strato.EventAggregator;
     using Strato.EventAggregator.Abstractions;
     using Strato.Mvvm.Commands;
     using Strato.Mvvm.Demo.Events;

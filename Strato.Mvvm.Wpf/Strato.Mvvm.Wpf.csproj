@@ -10,6 +10,7 @@
     <RepositoryType>git</RepositoryType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageVersion>1.0.0</PackageVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

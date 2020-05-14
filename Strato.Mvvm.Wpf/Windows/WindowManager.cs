@@ -8,6 +8,7 @@ namespace Strato.Mvvm.Wpf.Windows
 {
     using System;
     using System.Collections.Generic;
+    using System.Windows;
 
     using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +16,7 @@ namespace Strato.Mvvm.Wpf.Windows
     using Strato.Mvvm.Wpf.Events;
 
     /// <summary>
-    ///     The class for managing <see cref="ManagedWindow"/>s.
+    ///     The class for managing <see cref="Window"/>s.
     /// </summary>
     public class WindowManager
     {
@@ -25,9 +26,9 @@ namespace Strato.Mvvm.Wpf.Windows
         private readonly object _windowsLock = new object();
 
         /// <summary>
-        ///     Gets the <see cref="IReadOnlyCollection{T}"/> of <see cref="ManagedWindow"/>s.
+        ///     Gets the <see cref="IReadOnlyCollection{T}"/> of <see cref="Window"/>s.
         /// </summary>
-        public IReadOnlyCollection<ManagedWindow> Windows { get; private set; }
+        public IReadOnlyCollection<Window> Windows { get; private set; }
 
         /// <summary>
         ///     Gets the <see cref="IServiceProvider"/>.
@@ -43,7 +44,7 @@ namespace Strato.Mvvm.Wpf.Windows
         ///     Initializes a new instance of the <see cref="WindowManager"/> class.
         /// </summary>
         /// <param name="serviceProvider">
-        ///     The <see cref="IServiceProvider"/> to use when instantiating new <see cref="ManagedWindow"/>s.
+        ///     The <see cref="IServiceProvider"/> to use when instantiating new <see cref="Window"/>s.
         /// </param>
         /// <param name="eventAggregator">
         ///     The <see cref="IEventAggregator"/> to subscribe to.
@@ -56,27 +57,27 @@ namespace Strato.Mvvm.Wpf.Windows
             EventAggregator = eventAggregator;
             EventAggregator?.Subscribe<OpenWindowEvent>(OnOpenWindowRequested);
 
-            Windows = new List<ManagedWindow>().AsReadOnly();
+            Windows = new List<Window>().AsReadOnly();
         }
 
         /// <summary>
         ///     Opens a new <typeparamref name="TWindow"/>.
         /// </summary>
         /// <typeparam name="TWindow">
-        ///     The type of <see cref="ManagedWindow"/> to open.
+        ///     The type of <see cref="Window"/> to open.
         /// </typeparam>
         /// <param name="showAsDialog">
         ///     Whether or not to open the window as a dialog.
         /// </param>
         public void OpenWindow<TWindow>(bool showAsDialog = false)
-            where TWindow : ManagedWindow =>
+            where TWindow : Window =>
             OpenWindow(typeof(TWindow), showAsDialog);
 
         /// <summary>
-        ///     Opens a new <see cref="ManagedWindow"/>.
+        ///     Opens a new <see cref="Window"/>.
         /// </summary>
         /// <param name="windowType">
-        ///     The <see cref="Type"/> of <see cref="ManagedWindow"/> to open.
+        ///     The <see cref="Type"/> of <see cref="Window"/> to open.
         /// </param>
         /// <param name="showAsDialog">
         ///     Whether or not to open the window as a dialog.
@@ -85,17 +86,17 @@ namespace Strato.Mvvm.Wpf.Windows
         {
             // Ensure the type is correct
             if (windowType == null) throw new ArgumentNullException(nameof(windowType));
-            if (!typeof(ManagedWindow).IsAssignableFrom(windowType))
+            if (!typeof(Window).IsAssignableFrom(windowType))
             {
-                throw new ArgumentException($"The type \"{windowType.Name}\" does not implement \"{typeof(ManagedWindow).Name}\".");
+                throw new ArgumentException($"The type \"{windowType.Name}\" does not implement \"{typeof(Window).Name}\".");
             }
 
             // Create the window
-            ManagedWindow window = (ManagedWindow)ServiceProvider.GetRequiredService(windowType);
+            Window window = (Window)ServiceProvider.GetRequiredService(windowType);
 
             // Add to a new list
-            List<ManagedWindow> registrations =
-                new List<ManagedWindow>(Windows) { window };
+            List<Window> registrations =
+                new List<Window>(Windows) { window };
 
             // Re-initialize the registrations
             lock (_windowsLock)

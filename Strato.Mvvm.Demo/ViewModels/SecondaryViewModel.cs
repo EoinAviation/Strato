@@ -9,7 +9,7 @@ namespace Strato.Mvvm.Demo.ViewModels
     using Strato.EventAggregator;
     using Strato.EventAggregator.Abstractions;
     using Strato.Mvvm.Commands;
-    using Strato.Mvvm.Demo.Events;
+    using Strato.Mvvm.Navigation.Events;
     using Strato.Mvvm.ViewModels;
 
     /// <summary>
@@ -36,14 +36,6 @@ namespace Strato.Mvvm.Demo.ViewModels
         public SecondaryViewModel(IEventAggregator eventAggregator)
             : base(eventAggregator)
         {
-        }
-
-        /// <summary>
-        ///     Closes the current <see cref="ViewModel"/> and any associated Views.
-        /// </summary>
-        public void Close()
-        {
-            EventAggregator.Publish(new CloseEvent(this));
         }
 
         /// <summary>

@@ -6,19 +6,19 @@
 
 namespace Strato.Mvvm.Demo.Windows
 {
+    using System;
     using System.Windows;
 
     using Strato.EventAggregator.Abstractions;
-    using Strato.Mvvm.Demo.Events;
     using Strato.Mvvm.Demo.ViewModels;
     using Strato.Mvvm.Demo.Views;
     using Strato.Mvvm.Navigation;
-    using Strato.Mvvm.Wpf.Windows;
+    using Strato.Mvvm.Navigation.Events;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml.
     /// </summary>
-    public partial class MainWindow : ManagedWindow
+    public partial class MainWindow : Window
     {
         /// <summary>
         ///     Gets the <see cref="IEventAggregator"/>.
@@ -26,11 +26,13 @@ namespace Strato.Mvvm.Demo.Windows
         public IEventAggregator EventAggregator { get; }
 
         /// <summary>
+        ///     Gets the <see cref="INavigationContext"/>.
+        /// </summary>
+        public INavigationContext NavigationContext { get; }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        /// <param name="windowManager">
-        ///     The <see cref="WindowManager"/>.
-        /// </param>
         /// <param name="navigationContext">
         ///     The <see cref="INavigationContext"/>.
         /// </param>
@@ -38,20 +40,19 @@ namespace Strato.Mvvm.Demo.Windows
         ///     The <see cref="IEventAggregator"/>.
         /// </param>
         public MainWindow(
-            WindowManager windowManager,
             INavigationContext navigationContext,
             IEventAggregator eventAggregator)
-            : base(windowManager, navigationContext)
         {
             InitializeComponent();
 
             // Setup the navigation context
+            NavigationContext = navigationContext ?? throw new ArgumentNullException(nameof(navigationContext));
             NavigationContext.Register<FirstDemoView, FirstDemoViewModel>();
             NavigationContext.Register<SecondDemoView, SecondDemoViewModel>();
             NavigationControl.UseNavigationContext(NavigationContext);
 
             // Setup the Event Aggregator
-            EventAggregator = eventAggregator;
+            EventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             EventAggregator.Subscribe<CloseEvent>(HandleCloseEvent);
         }
 

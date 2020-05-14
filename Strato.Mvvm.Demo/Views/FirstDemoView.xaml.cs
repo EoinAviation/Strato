@@ -8,17 +8,17 @@ namespace Strato.Mvvm.Demo.Views
 {
     using System;
     using System.Windows;
+    using System.Windows.Controls;
 
     using Strato.EventAggregator.Abstractions;
     using Strato.Mvvm.Demo.ViewModels;
     using Strato.Mvvm.Demo.Windows;
-    using Strato.Mvvm.Wpf.Controls;
     using Strato.Mvvm.Wpf.Events;
 
     /// <summary>
     ///     Interaction logic for FirstDemoView.xaml.
     /// </summary>
-    public partial class FirstDemoView : View
+    public partial class FirstDemoView : UserControl, IView
     {
         /// <summary>
         ///     Gets the <see cref="IEventAggregator"/>.
@@ -35,9 +35,9 @@ namespace Strato.Mvvm.Demo.Views
         ///     The <see cref="IEventAggregator"/>.
         /// </param>
         public FirstDemoView(FirstDemoViewModel viewModel, IEventAggregator eventAggregator)
-            : base(viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
             EventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
         }
 

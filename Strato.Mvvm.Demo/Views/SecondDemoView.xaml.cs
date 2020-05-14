@@ -6,13 +6,15 @@
 
 namespace Strato.Mvvm.Demo.Views
 {
+    using System;
+    using System.Windows.Controls;
+
     using Strato.Mvvm.Demo.ViewModels;
-    using Strato.Mvvm.Wpf.Controls;
 
     /// <summary>
     ///     Interaction logic for SecondDemoView.xaml.
     /// </summary>
-    public partial class SecondDemoView : View
+    public partial class SecondDemoView : UserControl, IView
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="SecondDemoView"/> class.
@@ -21,9 +23,9 @@ namespace Strato.Mvvm.Demo.Views
         ///     The <see cref="SecondDemoViewModel"/>.
         /// </param>
         public SecondDemoView(SecondDemoViewModel viewModel)
-            : base(viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         }
     }
 }

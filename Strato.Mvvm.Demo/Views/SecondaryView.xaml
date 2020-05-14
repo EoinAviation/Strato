@@ -1,10 +1,9 @@
-﻿<controls:View x:Class="Strato.Mvvm.Demo.Views.SecondaryView"
+﻿<UserControl x:Class="Strato.Mvvm.Demo.Views.SecondaryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Strato.Mvvm.Demo.Views"
-             xmlns:controls="clr-namespace:Strato.Mvvm.Wpf.Controls;assembly=Strato.Mvvm.Wpf"
              xmlns:viewModels="clr-namespace:Strato.Mvvm.Demo.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:SecondaryViewModel}"
@@ -36,4 +35,4 @@
                 Command="{Binding CloseAllCommand}"
                 Content="Close All"/>
     </Grid>
-</controls:View>
+</UserControl>

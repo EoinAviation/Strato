@@ -15,7 +15,7 @@ namespace Strato.Mvvm.Wpf.Controls
     ///     Interaction logic for NavigationControl.xaml.
     ///     The <see cref="UserControl"/> capable of navigating between different <see cref="IView"/>s.
     /// </summary>
-    public partial class NavigationControl : UserControl
+    public partial class NavigationControl : UserControl, INavigationControl
     {
         /// <summary>
         ///     Gets the <see cref="INavigationContext"/> to use for managing navigation.

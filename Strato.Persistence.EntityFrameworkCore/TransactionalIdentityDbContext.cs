@@ -9,6 +9,7 @@ namespace Strato.Persistence.EntityFrameworkCore
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage;
@@ -19,10 +20,14 @@ namespace Strato.Persistence.EntityFrameworkCore
     ///     The abstract <see cref="IdentityDbContext"/> implementing <see cref="IDbContext"/> with more direct support
     ///     for <see cref="ITransaction"/>s.
     /// </summary>
-    public abstract class TransactionalIdentityDbContext : IdentityDbContext, IDbContext, ITransactionEnlistable, ITransactionFactory
+    /// <typeparam name="TUser">
+    ///     The type of <see cref="IdentityUser"/> being stored.
+    /// </typeparam>
+    public abstract class TransactionalIdentityDbContext<TUser> : IdentityDbContext<TUser>, IDbContext, ITransactionEnlistable, ITransactionFactory
+        where TUser : IdentityUser
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TransactionalIdentityDbContext"/> class.
+        ///     Initializes a new instance of the <see cref="TransactionalIdentityDbContext{TUser}"/> class.
         /// </summary>
         /// <param name="options">
         ///     The <see cref="DbContextOptions"/>.

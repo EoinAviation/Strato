@@ -19,6 +19,7 @@ namespace Strato.Mvvm.ViewModels
     using Strato.Mvvm.Attributes;
     using Strato.Mvvm.Commands;
     using Strato.Mvvm.Navigation;
+    using Strato.Mvvm.Navigation.Events;
 
     /// <summary>
     ///     The base View Model implementing <see cref="INotifyPropertyChanging"/> and
@@ -255,14 +256,14 @@ namespace Strato.Mvvm.ViewModels
             NavigationContext?.NavigateTo<TViewModel>();
         }
 
+        // Todo: Check if this ends up calling dispose
+
         /// <summary>
-        ///     Method raised when an <see cref="Exception"/> has been thrown.
+        ///     Closes the any views bound to the current <see cref="ViewModel"/> instance.
         /// </summary>
-        /// <param name="exception">
-        ///     The <see cref="Exception"/>.
-        /// </param>
-        public virtual void HandleException(Exception exception)
+        protected virtual void Close()
         {
+            EventAggregator.Publish(new CloseEvent(this));
         }
 
         /// <summary>

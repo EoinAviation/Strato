@@ -8,6 +8,7 @@ namespace Strato.Tests.Mvvm.Mocks
 {
     using System;
     using System.Threading.Tasks;
+
     using Strato.EventAggregator.Abstractions;
     using Strato.EventAggregator.Attributes;
     using Strato.Mvvm.Attributes;

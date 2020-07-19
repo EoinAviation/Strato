@@ -91,7 +91,11 @@ namespace Strato.Mvvm.Wpf.Navigation
         /// <typeparam name="TViewModel">
         ///     The type of <see cref="ViewModel"/> to navigate to.
         /// </typeparam>
-        public void NavigateTo<TViewModel>()
+        /// <param name="viewModelInstance">
+        ///     The <typeparamref name="TViewModel"/> instance to navigate to.
+        ///     If set to <c>null</c>, a new <typeparamref name="TViewModel"/> instance will be used.
+        /// </param>
+        public void NavigateTo<TViewModel>(TViewModel viewModelInstance = null)
             where TViewModel : ViewModel
         {
             // Find the registration
@@ -104,14 +108,13 @@ namespace Strato.Mvvm.Wpf.Navigation
             }
 
             // Build the View Model
-            TViewModel viewModel = ViewModelFactory.BuildViewModel<TViewModel>(_serviceProvider, this);
+            TViewModel viewModel = viewModelInstance ?? ViewModelFactory.BuildViewModel<TViewModel>(_serviceProvider, this);
 
             // Build the View
             IView targetView = (IView)ViewFactory.BuildView(registration.ViewType, _serviceProvider, viewModel, this);
 
             // Invoke the Navigation Requested Action
-            Action<IView> action = OnNavigationRequestedAction;
-            if (action != null)
+            if (OnNavigationRequestedAction != null)
             {
                 OnNavigationRequestedAction?.Invoke(targetView);
                 CurrentViewModel = viewModel;

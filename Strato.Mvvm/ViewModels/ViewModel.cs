@@ -243,19 +243,6 @@ namespace Strato.Mvvm.ViewModels
             }
         }
 
-        /// <summary>
-        ///     Instructs the <see cref="INavigationContext"/> to request navigation from the current
-        ///     <see cref="ViewModel"/> to another.
-        /// </summary>
-        /// <typeparam name="TViewModel">
-        ///     The type of <see cref="ViewModel"/> to navigate to.
-        /// </typeparam>
-        protected void NavigateTo<TViewModel>()
-            where TViewModel : ViewModel
-        {
-            NavigationContext?.NavigateTo<TViewModel>();
-        }
-
         // Todo: Check if this ends up calling dispose
 
         /// <summary>

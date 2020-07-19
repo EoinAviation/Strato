@@ -17,9 +17,9 @@ namespace Strato.Mvvm.Navigation
     public interface INavigationContext
     {
         /// <summary>
-        ///     Gets or sets the <see cref="Action{T}"/> to execute when navigation has been requested.
+        ///     Gets or sets the <see cref="Action{T1, T2}"/> to execute when navigation has been requested.
         /// </summary>
-        Action<IView> OnNavigationRequestedAction { get; set; }
+        Action<IView, ViewModel> OnNavigationRequestedAction { get; set; }
 
         /// <summary>
         ///     Gets the currently visible <see cref="ViewModel"/>.
@@ -40,12 +40,24 @@ namespace Strato.Mvvm.Navigation
             where TViewModel : ViewModel;
 
         /// <summary>
-        ///     Navigates to the requested <typeparamref name="TViewModel"/>.
+        ///     Navigates to a new instance of the requested <typeparamref name="TViewModel"/>.
         /// </summary>
         /// <typeparam name="TViewModel">
         ///     The type of <see cref="ViewModel"/> to navigate to.
         /// </typeparam>
         void NavigateTo<TViewModel>()
+            where TViewModel : ViewModel;
+
+        /// <summary>
+        ///     Navigates to the requested <typeparamref name="TViewModel"/> instance.
+        /// </summary>
+        /// <typeparam name="TViewModel">
+        ///     The type of <see cref="ViewModel"/> to navigate to.
+        /// </typeparam>
+        /// <param name="viewModelInstance">
+        ///     The <typeparamref name="TViewModel"/> instance to navigate to.
+        /// </param>
+        void NavigateTo<TViewModel>(TViewModel viewModelInstance)
             where TViewModel : ViewModel;
     }
 }

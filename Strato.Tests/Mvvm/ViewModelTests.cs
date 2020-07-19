@@ -10,7 +10,9 @@ namespace Strato.Tests.Mvvm
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Threading.Tasks;
+
     using NUnit.Framework;
+
     using Strato.EventAggregator;
     using Strato.EventAggregator.Abstractions;
     using Strato.EventAggregator.Attributes;

@@ -23,13 +23,11 @@ namespace Strato.Extensions
         /// <param name="onException">
         ///     The <see cref="Action{T}"/> to handle <see cref="Exception"/>s.
         /// </param>
-#pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
-        public static async void FireAndForgetSafeAsync(this Task task, Action<Exception> onException = null)
-#pragma warning restore RECS0165 // Asynchronous methods should return a Task instead of void
+        public static void FireAndForgetSafeAsync(this Task task, Action<Exception> onException = null)
         {
             try
             {
-                await task;
+                Task.Run(async () => await task);
             }
             catch (Exception exception)
             {
